@@ -83,17 +83,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Research delegations, draft position papers and resolutions, and rehearse speeches with an AI Model UN coach.",
+          "Research your delegation, draft position papers and resolutions, and rehearse speeches with an AI coach built for Model UN delegates.",
       },
       { name: "author", content: "MUN Buddy" },
       { property: "og:title", content: "MUN Buddy — AI Assistant for Model United Nations" },
       {
         property: "og:description",
-        content: "Your AI Model United Nations assistant.",
+        content: "Research your delegation, draft position papers and resolutions, and rehearse speeches with an AI coach built for Model UN delegates.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "MUN Buddy — AI Assistant for Model United Nations" },
+      { name: "twitter:description", content: "Research your delegation, draft position papers and resolutions, and rehearse speeches with an AI coach built for Model UN delegates." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/906795ed-d204-45db-9201-5985c238c002" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/906795ed-d204-45db-9201-5985c238c002" },
     ],
     links: [
       {
