@@ -18,6 +18,7 @@ import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedChatIndexRouteImport } from './routes/_authenticated/chat.index'
 import { Route as AuthenticatedChatThreadIdRouteImport } from './routes/_authenticated/chat.$threadId'
 import { Route as AuthenticatedDocumentsIndexRouteImport } from './routes/_authenticated/documents.index'
+import { Route as AuthenticatedDocumentsDocumentIdRouteImport } from './routes/_authenticated/documents.$documentId'
 import { Route as AuthenticatedToolsIndexRouteImport } from './routes/_authenticated/tools.index'
 import { Route as AuthenticatedToolsToolIdRouteImport } from './routes/_authenticated/tools.$toolId'
 
@@ -67,6 +68,12 @@ const AuthenticatedDocumentsIndexRoute =
     path: '/documents/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDocumentsDocumentIdRoute =
+  AuthenticatedDocumentsDocumentIdRouteImport.update({
+    id: '/documents/$documentId',
+    path: '/documents/$documentId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedToolsIndexRoute = AuthenticatedToolsIndexRouteImport.update({
   id: '/tools/',
   path: '/tools/',
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
+  '/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
   '/chat/': typeof AuthenticatedChatIndexRoute
   '/documents/': typeof AuthenticatedDocumentsIndexRoute
@@ -97,6 +105,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
+  '/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
   '/chat': typeof AuthenticatedChatIndexRoute
   '/documents': typeof AuthenticatedDocumentsIndexRoute
@@ -111,6 +120,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/api/chat': typeof ApiChatRoute
   '/_authenticated/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
+  '/_authenticated/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/_authenticated/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
   '/_authenticated/chat/': typeof AuthenticatedChatIndexRoute
   '/_authenticated/documents/': typeof AuthenticatedDocumentsIndexRoute
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/documents/$documentId'
     | '/tools/$toolId'
     | '/chat/'
     | '/documents/'
@@ -136,6 +147,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/documents/$documentId'
     | '/tools/$toolId'
     | '/chat'
     | '/documents'
@@ -149,6 +161,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/api/chat'
     | '/_authenticated/chat/$threadId'
+    | '/_authenticated/documents/$documentId'
     | '/_authenticated/tools/$toolId'
     | '/_authenticated/chat/'
     | '/_authenticated/documents/'
@@ -227,6 +240,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDocumentsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/documents/$documentId': {
+      id: '/_authenticated/documents/$documentId'
+      path: '/documents/$documentId'
+      fullPath: '/documents/$documentId'
+      preLoaderRoute: typeof AuthenticatedDocumentsDocumentIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/tools/': {
       id: '/_authenticated/tools/'
       path: '/tools'
@@ -260,6 +280,7 @@ const AuthenticatedChatRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedChatRoute: typeof AuthenticatedChatRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDocumentsDocumentIdRoute: typeof AuthenticatedDocumentsDocumentIdRoute
   AuthenticatedToolsToolIdRoute: typeof AuthenticatedToolsToolIdRoute
   AuthenticatedDocumentsIndexRoute: typeof AuthenticatedDocumentsIndexRoute
   AuthenticatedToolsIndexRoute: typeof AuthenticatedToolsIndexRoute
@@ -268,6 +289,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedChatRoute: AuthenticatedChatRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDocumentsDocumentIdRoute: AuthenticatedDocumentsDocumentIdRoute,
   AuthenticatedToolsToolIdRoute: AuthenticatedToolsToolIdRoute,
   AuthenticatedDocumentsIndexRoute: AuthenticatedDocumentsIndexRoute,
   AuthenticatedToolsIndexRoute: AuthenticatedToolsIndexRoute,
