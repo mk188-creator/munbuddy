@@ -17,6 +17,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedChatIndexRouteImport } from './routes/_authenticated/chat.index'
 import { Route as AuthenticatedChatThreadIdRouteImport } from './routes/_authenticated/chat.$threadId'
+import { Route as AuthenticatedDocumentsIndexRouteImport } from './routes/_authenticated/documents.index'
 import { Route as AuthenticatedToolsIndexRouteImport } from './routes/_authenticated/tools.index'
 import { Route as AuthenticatedToolsToolIdRouteImport } from './routes/_authenticated/tools.$toolId'
 
@@ -60,6 +61,12 @@ const AuthenticatedChatThreadIdRoute =
     path: '/$threadId',
     getParentRoute: () => AuthenticatedChatRoute,
   } as any)
+const AuthenticatedDocumentsIndexRoute =
+  AuthenticatedDocumentsIndexRouteImport.update({
+    id: '/documents/',
+    path: '/documents/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedToolsIndexRoute = AuthenticatedToolsIndexRouteImport.update({
   id: '/tools/',
   path: '/tools/',
@@ -81,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
   '/chat/': typeof AuthenticatedChatIndexRoute
+  '/documents/': typeof AuthenticatedDocumentsIndexRoute
   '/tools/': typeof AuthenticatedToolsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -91,6 +99,7 @@ export interface FileRoutesByTo {
   '/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
   '/chat': typeof AuthenticatedChatIndexRoute
+  '/documents': typeof AuthenticatedDocumentsIndexRoute
   '/tools': typeof AuthenticatedToolsIndexRoute
 }
 export interface FileRoutesById {
@@ -104,6 +113,7 @@ export interface FileRoutesById {
   '/_authenticated/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/_authenticated/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
   '/_authenticated/chat/': typeof AuthenticatedChatIndexRoute
+  '/_authenticated/documents/': typeof AuthenticatedDocumentsIndexRoute
   '/_authenticated/tools/': typeof AuthenticatedToolsIndexRoute
 }
 export interface FileRouteTypes {
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/chat/$threadId'
     | '/tools/$toolId'
     | '/chat/'
+    | '/documents/'
     | '/tools/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/chat/$threadId'
     | '/tools/$toolId'
     | '/chat'
+    | '/documents'
     | '/tools'
   id:
     | '__root__'
@@ -139,6 +151,7 @@ export interface FileRouteTypes {
     | '/_authenticated/chat/$threadId'
     | '/_authenticated/tools/$toolId'
     | '/_authenticated/chat/'
+    | '/_authenticated/documents/'
     | '/_authenticated/tools/'
   fileRoutesById: FileRoutesById
 }
@@ -207,6 +220,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedChatThreadIdRouteImport
       parentRoute: typeof AuthenticatedChatRoute
     }
+    '/_authenticated/documents/': {
+      id: '/_authenticated/documents/'
+      path: '/documents'
+      fullPath: '/documents/'
+      preLoaderRoute: typeof AuthenticatedDocumentsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/tools/': {
       id: '/_authenticated/tools/'
       path: '/tools'
@@ -241,6 +261,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedChatRoute: typeof AuthenticatedChatRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedToolsToolIdRoute: typeof AuthenticatedToolsToolIdRoute
+  AuthenticatedDocumentsIndexRoute: typeof AuthenticatedDocumentsIndexRoute
   AuthenticatedToolsIndexRoute: typeof AuthenticatedToolsIndexRoute
 }
 
@@ -248,6 +269,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedChatRoute: AuthenticatedChatRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedToolsToolIdRoute: AuthenticatedToolsToolIdRoute,
+  AuthenticatedDocumentsIndexRoute: AuthenticatedDocumentsIndexRoute,
   AuthenticatedToolsIndexRoute: AuthenticatedToolsIndexRoute,
 }
 
