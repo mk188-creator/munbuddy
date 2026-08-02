@@ -43,6 +43,11 @@ function SettingsPage() {
     product_updates: true,
     public_profile: false,
   });
+  const [soundOn, setSoundOn] = useState(true);
+
+  useEffect(() => {
+    setSoundOn(isSoundEnabled());
+  }, []);
 
   useEffect(() => {
     if (!profile.data) return;
