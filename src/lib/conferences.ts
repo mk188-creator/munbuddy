@@ -71,7 +71,8 @@ export function locationLabel(conference: Conference) {
 }
 
 function normalize(row: Record<string, unknown>): Conference {
-  const committees = Array.isArray(row.committees) ? (row.committees as Committee[]) : [];
+  const raw = row["committees"];
+  const committees = Array.isArray(raw) ? (raw as Committee[]) : [];
   return { ...(row as unknown as Conference), committees };
 }
 
