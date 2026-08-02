@@ -4,6 +4,7 @@ import {
   MessagesSquare,
   Wrench,
   FileText,
+  Globe2,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -30,6 +31,7 @@ const items = [
   { title: "Chat", url: "/chat", icon: MessagesSquare },
   { title: "Tools", url: "/tools", icon: Wrench },
   { title: "Documents", url: "/documents", icon: FileText },
+  { title: "MUN Hub", url: "/hub", icon: Globe2 },
   { title: "Settings", url: "/settings", icon: Settings },
 ];
 
