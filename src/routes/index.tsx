@@ -75,14 +75,14 @@ function Landing() {
         <div className="relative mx-auto max-w-3xl text-center animate-rise">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-raised px-3 py-1 text-xs text-muted-foreground">
             <ShieldCheck className="size-3.5 text-primary" />
-            Built for delegates, chairs and crisis directors
+            Your Complete Model United Nations Platform
           </span>
           <h1 className="mt-6 text-balance font-display text-4xl font-semibold leading-[1.05] sm:text-6xl">
             Walk into committee <span className="text-gradient">already prepared</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-pretty text-base text-muted-foreground sm:text-lg">
             MUN Hub researches your country, drafts your papers, formats your clauses and
-            rehearses your speeches — so you spend committee negotiating, not scrambling.
+            rehearses your speeches — and lists the conferences worth attending next.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <Button asChild variant="hero" size="xl">
@@ -91,11 +91,11 @@ function Landing() {
               </Link>
             </Button>
             <Button asChild variant="surface" size="xl">
-              <Link to="/auth">See the toolkit</Link>
+              <Link to="/hub">Browse conferences</Link>
             </Button>
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
-            {MUN_TOOLS.length} specialised tools · Threaded AI chat · Document workspace
+            {MUN_TOOLS.length} specialised tools · Threaded AI chat · Conference directory
           </p>
         </div>
       </section>
