@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouterState } from "@tanstack/react-router";
 
 import { playSound } from "@/lib/sound";
@@ -10,6 +10,7 @@ import { playSound } from "@/lib/sound";
  */
 export function SoundLayer() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const firstRender = useRef(true);
 
   useEffect(() => {
     const onPointerDown = (event: PointerEvent) => {
@@ -26,26 +27,13 @@ export function SoundLayer() {
     return () => window.removeEventListener("pointerdown", onPointerDown);
   }, []);
 
-  const first = usePathnameChange(pathname);
   useEffect(() => {
-    if (first) return;
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
     playSound("navigate");
-  }, [pathname, first]);
+  }, [pathname]);
 
   return null;
-}
-
-function usePathnameChange(pathname: string) {
-  // Returns true only for the very first render so we don't chime on load.
-  const key = `${pathname}`;
-  return useFirstRender(key);
-}
-
-let mounted = false;
-function useFirstRender(_key: string) {
-  const isFirst = !mounted;
-  useEffect(() => {
-    mounted = true;
-  }, []);
-  return isFirst;
 }
