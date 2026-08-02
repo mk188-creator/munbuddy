@@ -3,7 +3,7 @@ import { DefaultChatTransport, type UIMessage } from "ai";
 import { useEffect, useMemo, useRef } from "react";
 import { toast } from "sonner";
 
-import logo from "@/assets/mun-buddy-logo.png";
+import logo from "@/assets/mun-hub-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import {
   Conversation,
@@ -52,7 +52,7 @@ export function ChatWindow({
   toolId = null,
   autoPrompt = null,
   suggestions = [],
-  emptyTitle = "Ask MUN Buddy anything",
+  emptyTitle = "Ask MUN Hub anything",
   emptyDescription = "Position papers, clauses, POIs, crisis directives — all in your delegation's voice.",
   onFirstMessage,
 }: ChatWindowProps) {
@@ -160,7 +160,7 @@ export function ChatWindow({
             <PromptInputTextarea
               ref={textareaRef}
               autoFocus
-              placeholder="Message MUN Buddy…"
+              placeholder="Message MUN Hub…"
             />
             <PromptInputFooter className="justify-end">
               <PromptInputSubmit status={status} onStop={stop} />

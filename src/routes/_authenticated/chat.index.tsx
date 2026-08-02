@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 
-import logo from "@/assets/mun-buddy-logo.png";
+import logo from "@/assets/mun-hub-logo.png";
 import { Button } from "@/components/ui/button";
 import { createThread } from "@/lib/chat.functions";
 

@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * MUN Buddy design system — near-black surfaces, emerald accent.
+ * MUN Hub design system — near-black surfaces, emerald accent.
  * All color values are oklch tokens. Never hardcode colors in components.
  */
 

@@ -27,13 +27,13 @@ export const Route = createFileRoute("/_authenticated/tools/$toolId")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.name} — MUN Buddy` },
+          { title: `${loaderData.name} — MUN Hub` },
           { name: "description", content: loaderData.tagline },
-          { property: "og:title", content: `${loaderData.name} — MUN Buddy` },
+          { property: "og:title", content: `${loaderData.name} — MUN Hub` },
           { property: "og:description", content: loaderData.tagline },
         ]
       : [
-          { title: "Tool unavailable — MUN Buddy" },
+          { title: "Tool unavailable — MUN Hub" },
           { name: "robots", content: "noindex" },
         ],
   }),

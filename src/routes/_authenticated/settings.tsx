@@ -16,10 +16,10 @@ import { getProfile, updateProfile } from "@/lib/profile.functions";
 export const Route = createFileRoute("/_authenticated/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — MUN Buddy" },
+      { title: "Settings — MUN Hub" },
       { name: "description", content: "Manage your delegate profile, preferences and notifications." },
-      { property: "og:title", content: "Settings — MUN Buddy" },
-      { property: "og:description", content: "Manage your MUN Buddy profile and preferences." },
+      { property: "og:title", content: "Settings — MUN Hub" },
+      { property: "og:description", content: "Manage your MUN Hub profile and preferences." },
     ],
   }),
   component: SettingsPage,

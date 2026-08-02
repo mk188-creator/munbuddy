@@ -79,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "MUN Buddy — AI Assistant for Model United Nations" },
+      { title: "MUN Hub — AI Assistant for Model United Nations" },
       {
         name: "description",
         content:
           "Research your delegation, draft position papers and resolutions, and rehearse speeches with an AI coach built for Model UN delegates.",
       },
-      { name: "author", content: "MUN Buddy" },
-      { property: "og:title", content: "MUN Buddy — AI Assistant for Model United Nations" },
+      { name: "author", content: "MUN Hub" },
+      { property: "og:title", content: "MUN Hub — AI Assistant for Model United Nations" },
       {
         property: "og:description",
         content: "Research your delegation, draft position papers and resolutions, and rehearse speeches with an AI coach built for Model UN delegates.",
@@ -94,7 +94,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "MUN Buddy — AI Assistant for Model United Nations" },
+      { name: "twitter:title", content: "MUN Hub — AI Assistant for Model United Nations" },
       { name: "twitter:description", content: "Research your delegation, draft position papers and resolutions, and rehearse speeches with an AI coach built for Model UN delegates." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/906795ed-d204-45db-9201-5985c238c002" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/906795ed-d204-45db-9201-5985c238c002" },

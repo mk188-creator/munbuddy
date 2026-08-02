@@ -10,20 +10,20 @@ import {
   Siren,
 } from "lucide-react";
 
-import logo from "@/assets/mun-buddy-logo.png";
+import logo from "@/assets/mun-hub-logo.png";
 import { Button } from "@/components/ui/button";
 import { MUN_TOOLS } from "@/lib/mun-tools";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MUN Buddy — AI Assistant for Model United Nations" },
+      { title: "MUN Hub — AI Assistant for Model United Nations" },
       {
         name: "description",
         content:
           "Research your delegation, draft position papers and resolutions, and rehearse speeches with an AI coach built for Model UN delegates.",
       },
-      { property: "og:title", content: "MUN Buddy — AI Assistant for Model United Nations" },
+      { property: "og:title", content: "MUN Hub — AI Assistant for Model United Nations" },
       {
         property: "og:description",
         content:
@@ -50,8 +50,8 @@ function Landing() {
     <div className="min-h-screen">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-2.5">
-          <img src={logo} alt="MUN Buddy logo" className="size-9 rounded-xl" />
-          <span className="font-display text-lg font-semibold">MUN Buddy</span>
+          <img src={logo} alt="MUN Hub logo" className="size-9 rounded-xl" />
+          <span className="font-display text-lg font-semibold">MUN Hub</span>
         </div>
         <nav className="flex items-center gap-2">
           <Button asChild variant="ghost" size="sm">
@@ -78,7 +78,7 @@ function Landing() {
             Walk into committee <span className="text-gradient">already prepared</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-pretty text-base text-muted-foreground sm:text-lg">
-            MUN Buddy researches your country, drafts your papers, formats your clauses and
+            MUN Hub researches your country, drafts your papers, formats your clauses and
             rehearses your speeches — so you spend committee negotiating, not scrambling.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
@@ -134,7 +134,7 @@ function Landing() {
 
       <footer className="border-t border-border/70 px-6 py-8">
         <p className="mx-auto max-w-6xl text-xs text-muted-foreground">
-          MUN Buddy — AI assistance for Model United Nations. Always verify sourced facts before
+          MUN Hub — AI assistance for Model United Nations. Always verify sourced facts before
           committee.
         </p>
       </footer>

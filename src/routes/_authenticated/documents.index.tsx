@@ -19,12 +19,12 @@ import {
 export const Route = createFileRoute("/_authenticated/documents/")({
   head: () => ({
     meta: [
-      { title: "Documents — MUN Buddy" },
+      { title: "Documents — MUN Hub" },
       {
         name: "description",
         content: "Write, organise and export your position papers, resolutions and speeches.",
       },
-      { property: "og:title", content: "Documents — MUN Buddy" },
+      { property: "og:title", content: "Documents — MUN Hub" },
       { property: "og:description", content: "Your Model UN document workspace." },
     ],
   }),

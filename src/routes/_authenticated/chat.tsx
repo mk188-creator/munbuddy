@@ -11,9 +11,9 @@ import { listThreads, createThread, deleteThread } from "@/lib/chat.functions";
 export const Route = createFileRoute("/_authenticated/chat")({
   head: () => ({
     meta: [
-      { title: "AI Chat — MUN Buddy" },
+      { title: "AI Chat — MUN Hub" },
       { name: "description", content: "Threaded conversations with your Model UN AI coach." },
-      { property: "og:title", content: "AI Chat — MUN Buddy" },
+      { property: "og:title", content: "AI Chat — MUN Hub" },
       { property: "og:description", content: "Threaded conversations with your Model UN AI coach." },
     ],
   }),

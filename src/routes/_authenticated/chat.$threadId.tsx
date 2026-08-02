@@ -62,7 +62,7 @@ function ChatThreadPage() {
       toolId={toolId}
       autoPrompt={search.prompt ?? null}
       suggestions={tool ? [] : SUGGESTIONS}
-      emptyTitle={tool ? tool.name : "Ask MUN Buddy anything"}
+      emptyTitle={tool ? tool.name : "Ask MUN Hub anything"}
       emptyDescription={
         tool
           ? tool.tagline

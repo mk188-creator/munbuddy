@@ -9,13 +9,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_authenticated/tools/")({
   head: () => ({
     meta: [
-      { title: "MUN Tools — MUN Buddy" },
+      { title: "MUN Tools — MUN Hub" },
       {
         name: "description",
         content:
           "Position papers, resolutions, clauses, amendments, POIs, motions, speeches, crisis directives and research tools for Model UN.",
       },
-      { property: "og:title", content: "MUN Tools — MUN Buddy" },
+      { property: "og:title", content: "MUN Tools — MUN Hub" },
       { property: "og:description", content: "Every Model UN tool a delegate needs, in one place." },
     ],
   }),
