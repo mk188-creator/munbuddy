@@ -16,6 +16,8 @@ import { Route as AuthenticatedChatRouteImport } from './routes/_authenticated/c
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as HubIndexRouteImport } from './routes/hub.index'
+import { Route as HubSlugRouteImport } from './routes/hub.$slug'
 import { Route as AuthenticatedChatIndexRouteImport } from './routes/_authenticated/chat.index'
 import { Route as AuthenticatedChatThreadIdRouteImport } from './routes/_authenticated/chat.$threadId'
 import { Route as AuthenticatedDocumentsIndexRouteImport } from './routes/_authenticated/documents.index'
@@ -55,6 +57,16 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HubIndexRoute = HubIndexRouteImport.update({
+  id: '/hub/',
+  path: '/hub/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HubSlugRoute = HubSlugRouteImport.update({
+  id: '/hub/$slug',
+  path: '/hub/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedChatIndexRoute = AuthenticatedChatIndexRouteImport.update({
@@ -99,6 +111,8 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/api/chat': typeof ApiChatRoute
+  '/hub/$slug': typeof HubSlugRoute
+  '/hub/': typeof HubIndexRoute
   '/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
@@ -112,6 +126,8 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/api/chat': typeof ApiChatRoute
+  '/hub/$slug': typeof HubSlugRoute
+  '/hub': typeof HubIndexRoute
   '/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
@@ -128,6 +144,8 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/api/chat': typeof ApiChatRoute
+  '/hub/$slug': typeof HubSlugRoute
+  '/hub/': typeof HubIndexRoute
   '/_authenticated/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/_authenticated/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/_authenticated/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
@@ -144,6 +162,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/settings'
     | '/api/chat'
+    | '/hub/$slug'
+    | '/hub/'
     | '/chat/$threadId'
     | '/documents/$documentId'
     | '/tools/$toolId'
@@ -157,6 +177,8 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/settings'
     | '/api/chat'
+    | '/hub/$slug'
+    | '/hub'
     | '/chat/$threadId'
     | '/documents/$documentId'
     | '/tools/$toolId'
@@ -172,6 +194,8 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/settings'
     | '/api/chat'
+    | '/hub/$slug'
+    | '/hub/'
     | '/_authenticated/chat/$threadId'
     | '/_authenticated/documents/$documentId'
     | '/_authenticated/tools/$toolId'
@@ -185,6 +209,8 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   ApiChatRoute: typeof ApiChatRoute
+  HubSlugRoute: typeof HubSlugRoute
+  HubIndexRoute: typeof HubIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -236,6 +262,20 @@ declare module '@tanstack/react-router' {
       path: '/api/chat'
       fullPath: '/api/chat'
       preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hub/': {
+      id: '/hub/'
+      path: '/hub'
+      fullPath: '/hub/'
+      preLoaderRoute: typeof HubIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hub/$slug': {
+      id: '/hub/$slug'
+      path: '/hub/$slug'
+      fullPath: '/hub/$slug'
+      preLoaderRoute: typeof HubSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/chat/': {
@@ -324,6 +364,8 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   ApiChatRoute: ApiChatRoute,
+  HubSlugRoute: HubSlugRoute,
+  HubIndexRoute: HubIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
