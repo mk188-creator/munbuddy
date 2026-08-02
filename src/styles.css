@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * MUN Buddy design system — near-black surfaces, emerald accent.
+ * MUN Hub design system — near-black surfaces, emerald accent.
  * All color values are oklch tokens. Never hardcode colors in components.
  */
 
@@ -214,6 +214,50 @@
   }
   .animate-rise {
     animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .animate-rise-delayed {
+    animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+  }
+  .hover-lift {
+    transition:
+      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.22s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--glow-primary);
+  }
+}
+
+/* Premium micro-interactions: every button/link eases, and pressing gives a
+   tactile scale-down. Kept global so it applies without touching components. */
+@layer base {
+  button,
+  a,
+  [role="button"] {
+    transition:
+      transform 0.16s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease,
+      opacity 0.18s ease,
+      box-shadow 0.18s ease;
+  }
+
+  button:active:not(:disabled),
+  [role="button"]:active {
+    transform: scale(0.97);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 

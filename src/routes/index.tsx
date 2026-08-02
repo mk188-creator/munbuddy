@@ -10,20 +10,20 @@ import {
   Siren,
 } from "lucide-react";
 
-import logo from "@/assets/mun-buddy-logo.png";
+import logo from "@/assets/mun-hub-logo.png";
 import { Button } from "@/components/ui/button";
 import { MUN_TOOLS } from "@/lib/mun-tools";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MUN Buddy — AI Assistant for Model United Nations" },
+      { title: "MUN Hub — Your Complete Model United Nations Platform" },
       {
         name: "description",
         content:
           "Research your delegation, draft position papers and resolutions, and rehearse speeches with an AI coach built for Model UN delegates.",
       },
-      { property: "og:title", content: "MUN Buddy — AI Assistant for Model United Nations" },
+      { property: "og:title", content: "MUN Hub — Your Complete Model United Nations Platform" },
       {
         property: "og:description",
         content:
@@ -50,10 +50,13 @@ function Landing() {
     <div className="min-h-screen">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
         <div className="flex items-center gap-2.5">
-          <img src={logo} alt="MUN Buddy logo" className="size-9 rounded-xl" />
-          <span className="font-display text-lg font-semibold">MUN Buddy</span>
+          <img src={logo} alt="MUN Hub logo" className="size-9 rounded-xl" />
+          <span className="font-display text-lg font-semibold">MUN Hub</span>
         </div>
         <nav className="flex items-center gap-2">
+          <Button asChild variant="ghost" size="sm">
+            <Link to="/hub">MUN Hub</Link>
+          </Button>
           <Button asChild variant="ghost" size="sm">
             <Link to="/auth">Sign in</Link>
           </Button>
@@ -72,14 +75,14 @@ function Landing() {
         <div className="relative mx-auto max-w-3xl text-center animate-rise">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-raised px-3 py-1 text-xs text-muted-foreground">
             <ShieldCheck className="size-3.5 text-primary" />
-            Built for delegates, chairs and crisis directors
+            Your Complete Model United Nations Platform
           </span>
           <h1 className="mt-6 text-balance font-display text-4xl font-semibold leading-[1.05] sm:text-6xl">
             Walk into committee <span className="text-gradient">already prepared</span>
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-pretty text-base text-muted-foreground sm:text-lg">
-            MUN Buddy researches your country, drafts your papers, formats your clauses and
-            rehearses your speeches — so you spend committee negotiating, not scrambling.
+            MUN Hub researches your country, drafts your papers, formats your clauses and
+            rehearses your speeches — and lists the conferences worth attending next.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <Button asChild variant="hero" size="xl">
@@ -88,11 +91,11 @@ function Landing() {
               </Link>
             </Button>
             <Button asChild variant="surface" size="xl">
-              <Link to="/auth">See the toolkit</Link>
+              <Link to="/hub">Browse conferences</Link>
             </Button>
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
-            {MUN_TOOLS.length} specialised tools · Threaded AI chat · Document workspace
+            {MUN_TOOLS.length} specialised tools · Threaded AI chat · Conference directory
           </p>
         </div>
       </section>
@@ -134,7 +137,7 @@ function Landing() {
 
       <footer className="border-t border-border/70 px-6 py-8">
         <p className="mx-auto max-w-6xl text-xs text-muted-foreground">
-          MUN Buddy — AI assistance for Model United Nations. Always verify sourced facts before
+          MUN Hub — AI assistance for Model United Nations. Always verify sourced facts before
           committee.
         </p>
       </footer>

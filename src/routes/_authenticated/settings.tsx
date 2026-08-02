@@ -12,14 +12,15 @@ import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
 import { getProfile, updateProfile } from "@/lib/profile.functions";
+import { isSoundEnabled, playSound, setSoundEnabled } from "@/lib/sound";
 
 export const Route = createFileRoute("/_authenticated/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — MUN Buddy" },
+      { title: "Settings — MUN Hub" },
       { name: "description", content: "Manage your delegate profile, preferences and notifications." },
-      { property: "og:title", content: "Settings — MUN Buddy" },
-      { property: "og:description", content: "Manage your MUN Buddy profile and preferences." },
+      { property: "og:title", content: "Settings — MUN Hub" },
+      { property: "og:description", content: "Manage your MUN Hub profile and preferences." },
     ],
   }),
   component: SettingsPage,
@@ -42,6 +43,11 @@ function SettingsPage() {
     product_updates: true,
     public_profile: false,
   });
+  const [soundOn, setSoundOn] = useState(true);
+
+  useEffect(() => {
+    setSoundOn(isSoundEnabled());
+  }, []);
 
   useEffect(() => {
     if (!profile.data) return;
@@ -139,6 +145,22 @@ function SettingsPage() {
         </div>
 
         <div className="space-y-4 border-t border-border/70 pt-5">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-sm">Interface sounds</p>
+              <p className="text-xs text-muted-foreground">
+                Subtle clicks, navigation and success chimes across the app.
+              </p>
+            </div>
+            <Switch
+              checked={soundOn}
+              onCheckedChange={(checked) => {
+                setSoundEnabled(checked);
+                setSoundOn(checked);
+                if (checked) playSound("success");
+              }}
+            />
+          </div>
           {toggles.map((toggle) => (
             <div key={toggle.key} className="flex items-center justify-between gap-4">
               <div>

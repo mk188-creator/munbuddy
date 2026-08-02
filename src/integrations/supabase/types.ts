@@ -103,6 +103,122 @@ export type Database = {
         }
         Relationships: []
       }
+      conference_bookmarks: {
+        Row: {
+          conference_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          conference_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          conference_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conference_bookmarks_conference_id_fkey"
+            columns: ["conference_id"]
+            isOneToOne: false
+            referencedRelation: "conferences"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conferences: {
+        Row: {
+          banner_url: string | null
+          city: string
+          committees: Json
+          contact_email: string
+          contact_phone: string
+          country: string
+          created_at: string
+          delegate_fee: string
+          description: string
+          end_date: string | null
+          id: string
+          instagram_url: string
+          linkedin_url: string
+          logo_url: string | null
+          mode: string
+          name: string
+          published: boolean
+          registration_url: string
+          slug: string
+          start_date: string | null
+          tagline: string
+          twitter_url: string
+          updated_at: string
+          user_id: string
+          venue: string
+          website_url: string
+        }
+        Insert: {
+          banner_url?: string | null
+          city?: string
+          committees?: Json
+          contact_email?: string
+          contact_phone?: string
+          country?: string
+          created_at?: string
+          delegate_fee?: string
+          description?: string
+          end_date?: string | null
+          id?: string
+          instagram_url?: string
+          linkedin_url?: string
+          logo_url?: string | null
+          mode?: string
+          name: string
+          published?: boolean
+          registration_url?: string
+          slug: string
+          start_date?: string | null
+          tagline?: string
+          twitter_url?: string
+          updated_at?: string
+          user_id: string
+          venue?: string
+          website_url?: string
+        }
+        Update: {
+          banner_url?: string | null
+          city?: string
+          committees?: Json
+          contact_email?: string
+          contact_phone?: string
+          country?: string
+          created_at?: string
+          delegate_fee?: string
+          description?: string
+          end_date?: string | null
+          id?: string
+          instagram_url?: string
+          linkedin_url?: string
+          logo_url?: string | null
+          mode?: string
+          name?: string
+          published?: boolean
+          registration_url?: string
+          slug?: string
+          start_date?: string | null
+          tagline?: string
+          twitter_url?: string
+          updated_at?: string
+          user_id?: string
+          venue?: string
+          website_url?: string
+        }
+        Relationships: []
+      }
       documents: {
         Row: {
           content: string

@@ -1,6 +1,6 @@
 # MUN AI Assistant
 
-Build a production-ready full-stack AI web application called **MUN Buddy**, a premium AI assistant for Model United Nations. The app must be modern, fast, secure, responsive, scalable, and fully functional.
+Build a production-ready full-stack AI web application called **MUN Hub**, a premium AI assistant for Model United Nations. The app must be modern, fast, secure, responsive, scalable, and fully functional.
 
 
 
@@ -196,7 +196,7 @@ Name: **M. Mustafa Khan**
 
 
 
-Title: **Founder & Creator of MUN Buddy**
+Title: **Founder & Creator of MUN Hub**
 
 
 

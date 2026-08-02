@@ -12,9 +12,9 @@ import { MUN_TOOLS, getTool } from "@/lib/mun-tools";
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — MUN Buddy" },
+      { title: "Dashboard — MUN Hub" },
       { name: "description", content: "Your MUN preparation at a glance: recent chats, tool usage and documents." },
-      { property: "og:title", content: "Dashboard — MUN Buddy" },
+      { property: "og:title", content: "Dashboard — MUN Hub" },
       { property: "og:description", content: "Your Model UN preparation workspace." },
     ],
   }),

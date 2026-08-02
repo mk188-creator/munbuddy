@@ -2,7 +2,7 @@ import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-import logo from "@/assets/mun-buddy-logo.png";
+import logo from "@/assets/mun-hub-logo.png";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
@@ -13,13 +13,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — MUN Buddy" },
+      { title: "Sign in — MUN Hub" },
       {
         name: "description",
         content:
-          "Sign in to MUN Buddy to draft position papers, resolutions and speeches with an AI Model UN coach.",
+          "Sign in to MUN Hub to draft position papers, resolutions and speeches with an AI Model UN coach.",
       },
-      { property: "og:title", content: "Sign in — MUN Buddy" },
+      { property: "og:title", content: "Sign in — MUN Hub" },
       {
         property: "og:description",
         content: "Your AI Model United Nations assistant. Research, write and win awards.",
@@ -91,8 +91,8 @@ function AuthPage() {
       />
       <div className="relative w-full max-w-md">
         <Link to="/" className="mb-8 flex items-center justify-center gap-3">
-          <img src={logo} alt="MUN Buddy" className="size-10 rounded-xl" />
-          <span className="font-display text-xl font-semibold">MUN Buddy</span>
+          <img src={logo} alt="MUN Hub" className="size-10 rounded-xl" />
+          <span className="font-display text-xl font-semibold">MUN Hub</span>
         </Link>
 
         <div className="panel p-6 sm:p-8">

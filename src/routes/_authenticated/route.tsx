@@ -23,7 +23,7 @@ function AuthenticatedLayout() {
           <header className="sticky top-0 z-20 flex h-14 items-center gap-3 border-b border-border/70 bg-background/80 px-4 backdrop-blur">
             <SidebarTrigger />
             <span className="font-display text-sm font-medium text-muted-foreground">
-              MUN Buddy
+              MUN Hub
             </span>
           </header>
           <main className="min-w-0 flex-1">
