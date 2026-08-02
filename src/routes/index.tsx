@@ -55,6 +55,9 @@ function Landing() {
         </div>
         <nav className="flex items-center gap-2">
           <Button asChild variant="ghost" size="sm">
+            <Link to="/hub">MUN Hub</Link>
+          </Button>
+          <Button asChild variant="ghost" size="sm">
             <Link to="/auth">Sign in</Link>
           </Button>
           <Button asChild variant="hero" size="sm">
