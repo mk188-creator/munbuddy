@@ -17,13 +17,13 @@ import { MUN_TOOLS } from "@/lib/mun-tools";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MUN Hub — AI Assistant for Model United Nations" },
+      { title: "MUN Hub — Your Complete Model United Nations Platform" },
       {
         name: "description",
         content:
           "Research your delegation, draft position papers and resolutions, and rehearse speeches with an AI coach built for Model UN delegates.",
       },
-      { property: "og:title", content: "MUN Hub — AI Assistant for Model United Nations" },
+      { property: "og:title", content: "MUN Hub — Your Complete Model United Nations Platform" },
       {
         property: "og:description",
         content:
