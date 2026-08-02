@@ -139,6 +139,22 @@ function SettingsPage() {
         </div>
 
         <div className="space-y-4 border-t border-border/70 pt-5">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-sm">Interface sounds</p>
+              <p className="text-xs text-muted-foreground">
+                Subtle clicks, navigation and success chimes across the app.
+              </p>
+            </div>
+            <Switch
+              checked={soundOn}
+              onCheckedChange={(checked) => {
+                setSoundEnabled(checked);
+                setSoundOn(checked);
+                if (checked) playSound("success");
+              }}
+            />
+          </div>
           {toggles.map((toggle) => (
             <div key={toggle.key} className="flex items-center justify-between gap-4">
               <div>
