@@ -22,6 +22,7 @@ import { Route as AuthenticatedChatIndexRouteImport } from './routes/_authentica
 import { Route as AuthenticatedChatThreadIdRouteImport } from './routes/_authenticated/chat.$threadId'
 import { Route as AuthenticatedDocumentsIndexRouteImport } from './routes/_authenticated/documents.index'
 import { Route as AuthenticatedDocumentsDocumentIdRouteImport } from './routes/_authenticated/documents.$documentId'
+import { Route as AuthenticatedHubNewRouteImport } from './routes/_authenticated/hub.new'
 import { Route as AuthenticatedToolsIndexRouteImport } from './routes/_authenticated/tools.index'
 import { Route as AuthenticatedToolsToolIdRouteImport } from './routes/_authenticated/tools.$toolId'
 
@@ -92,6 +93,11 @@ const AuthenticatedDocumentsDocumentIdRoute =
     path: '/documents/$documentId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedHubNewRoute = AuthenticatedHubNewRouteImport.update({
+  id: '/hub/new',
+  path: '/hub/new',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedToolsIndexRoute = AuthenticatedToolsIndexRouteImport.update({
   id: '/tools/',
   path: '/tools/',
@@ -115,6 +121,7 @@ export interface FileRoutesByFullPath {
   '/hub/': typeof HubIndexRoute
   '/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
+  '/hub/new': typeof AuthenticatedHubNewRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
   '/chat/': typeof AuthenticatedChatIndexRoute
   '/documents/': typeof AuthenticatedDocumentsIndexRoute
@@ -130,6 +137,7 @@ export interface FileRoutesByTo {
   '/hub': typeof HubIndexRoute
   '/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
+  '/hub/new': typeof AuthenticatedHubNewRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
   '/chat': typeof AuthenticatedChatIndexRoute
   '/documents': typeof AuthenticatedDocumentsIndexRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/hub/': typeof HubIndexRoute
   '/_authenticated/chat/$threadId': typeof AuthenticatedChatThreadIdRoute
   '/_authenticated/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
+  '/_authenticated/hub/new': typeof AuthenticatedHubNewRoute
   '/_authenticated/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
   '/_authenticated/chat/': typeof AuthenticatedChatIndexRoute
   '/_authenticated/documents/': typeof AuthenticatedDocumentsIndexRoute
@@ -166,6 +175,7 @@ export interface FileRouteTypes {
     | '/hub/'
     | '/chat/$threadId'
     | '/documents/$documentId'
+    | '/hub/new'
     | '/tools/$toolId'
     | '/chat/'
     | '/documents/'
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
     | '/hub'
     | '/chat/$threadId'
     | '/documents/$documentId'
+    | '/hub/new'
     | '/tools/$toolId'
     | '/chat'
     | '/documents'
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/hub/'
     | '/_authenticated/chat/$threadId'
     | '/_authenticated/documents/$documentId'
+    | '/_authenticated/hub/new'
     | '/_authenticated/tools/$toolId'
     | '/_authenticated/chat/'
     | '/_authenticated/documents/'
@@ -306,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDocumentsDocumentIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/hub/new': {
+      id: '/_authenticated/hub/new'
+      path: '/hub/new'
+      fullPath: '/hub/new'
+      preLoaderRoute: typeof AuthenticatedHubNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/tools/': {
       id: '/_authenticated/tools/'
       path: '/tools'
@@ -341,6 +360,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedDocumentsDocumentIdRoute: typeof AuthenticatedDocumentsDocumentIdRoute
+  AuthenticatedHubNewRoute: typeof AuthenticatedHubNewRoute
   AuthenticatedToolsToolIdRoute: typeof AuthenticatedToolsToolIdRoute
   AuthenticatedDocumentsIndexRoute: typeof AuthenticatedDocumentsIndexRoute
   AuthenticatedToolsIndexRoute: typeof AuthenticatedToolsIndexRoute
@@ -351,6 +371,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedDocumentsDocumentIdRoute: AuthenticatedDocumentsDocumentIdRoute,
+  AuthenticatedHubNewRoute: AuthenticatedHubNewRoute,
   AuthenticatedToolsToolIdRoute: AuthenticatedToolsToolIdRoute,
   AuthenticatedDocumentsIndexRoute: AuthenticatedDocumentsIndexRoute,
   AuthenticatedToolsIndexRoute: AuthenticatedToolsIndexRoute,

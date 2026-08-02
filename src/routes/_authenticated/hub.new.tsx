@@ -176,7 +176,7 @@ function ListYourMun() {
           </div>
         </Section>
 
-        <Section title="When &amp; where">
+        <Section title="When and where">
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Start date">
               <Input
@@ -227,7 +227,7 @@ function ListYourMun() {
           </div>
         </Section>
 
-        <Section title="Registration &amp; links">
+        <Section title="Registration and links">
           <Field label="Registration link">
             <Input
               type="url"
