@@ -1,4 +1,5 @@
 import { useChat } from "@ai-sdk/react";
+import { playSound } from "@/lib/sound";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { useEffect, useMemo, useRef } from "react";
 import { toast } from "sonner";
@@ -64,7 +65,10 @@ export function ChatWindow({
     messages: initialMessages,
     transport,
     onError: (chatError) => toast.error(chatError.message || "The assistant could not respond"),
-    onFinish: () => onFirstMessage?.(),
+    onFinish: () => {
+      playSound("ai");
+      onFirstMessage?.();
+    },
   });
 
   const body = useMemo(() => ({ threadId, toolId }), [threadId, toolId]);
