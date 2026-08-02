@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/hooks/useAuth";
 import { getProfile, updateProfile } from "@/lib/profile.functions";
+import { isSoundEnabled, playSound, setSoundEnabled } from "@/lib/sound";
 
 export const Route = createFileRoute("/_authenticated/settings")({
   head: () => ({
