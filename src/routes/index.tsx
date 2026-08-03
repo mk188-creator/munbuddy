@@ -136,10 +136,20 @@ function Landing() {
       </section>
 
       <footer className="border-t border-border/70 px-6 py-8">
-        <p className="mx-auto max-w-6xl text-xs text-muted-foreground">
-          MUN Hub — AI assistance for Model United Nations. Always verify sourced facts before
-          committee.
-        </p>
+        <div className="mx-auto flex max-w-6xl flex-col gap-3 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <p>
+            MUN Hub — AI assistance for Model United Nations. Always verify sourced facts before
+            committee.
+          </p>
+          <nav className="flex gap-4">
+            <Link to="/hub" className="transition-colors hover:text-foreground">
+              Conferences
+            </Link>
+            <Link to="/creator" className="transition-colors hover:text-foreground">
+              Meet the creator
+            </Link>
+          </nav>
+        </div>
       </footer>
     </div>
   );
