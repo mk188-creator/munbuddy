@@ -18,6 +18,9 @@ export function PublicHeader() {
           <Button asChild variant="ghost" size="sm">
             <Link to="/hub">Conferences</Link>
           </Button>
+          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
+            <Link to="/creator">Creator</Link>
+          </Button>
           {user ? (
             <Button asChild variant="hero" size="sm">
               <Link to="/dashboard">Dashboard</Link>
