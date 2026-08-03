@@ -48,12 +48,22 @@ function AuthPage() {
     return () => data.subscription.unsubscribe();
   }, []);
 
+  const friendly = (message: string) => {
+    if (/invalid login credentials/i.test(message))
+      return "Wrong email or password. If you just signed up, try creating the account again.";
+    if (/known to be weak|pwned/i.test(message))
+      return "That password appears in known data breaches. Please choose a stronger one.";
+    if (/already registered/i.test(message))
+      return "That email already has an account — try signing in instead.";
+    return message;
+  };
+
   const signIn = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
-    if (error) toast.error(error.message);
+    if (error) toast.error(friendly(error.message));
   };
 
   const signUp = async (event: React.FormEvent) => {
@@ -69,11 +79,16 @@ function AuthPage() {
     });
     setLoading(false);
     if (error) {
-      toast.error(error.message);
+      toast.error(friendly(error.message));
       return;
     }
-    if (!data.session) setSent(true);
+    if (data.session) {
+      window.location.href = "/dashboard";
+      return;
+    }
+    setSent(true);
   };
+
 
   const google = async () => {
     const result = await lovable.auth.signInWithOAuth("google", {
