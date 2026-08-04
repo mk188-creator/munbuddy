@@ -13,6 +13,9 @@ import appCss from "../styles.css?url";
 import { AuthProvider } from "@/hooks/useAuth";
 import { Toaster } from "@/components/ui/sonner";
 import { SoundLayer } from "@/components/system/SoundLayer";
+import { LoadingScreen, PageTransition, RippleLayer } from "@/components/motion/Effects";
+import { MouseGlow } from "@/components/motion/primitives";
+
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
@@ -139,10 +142,16 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <SoundLayer />
+        <LoadingScreen />
+        <RippleLayer />
+        <MouseGlow />
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
+        <PageTransition>
+          <Outlet />
+        </PageTransition>
         <Toaster position="top-center" />
       </AuthProvider>
     </QueryClientProvider>
   );
 }
+
