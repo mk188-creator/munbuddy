@@ -228,7 +228,83 @@
     transform: translateY(-3px);
     box-shadow: var(--glow-primary);
   }
+
+  /* Slow-drifting aurora gradient backdrop for hero / feature sections. */
+  .aurora {
+    background:
+      radial-gradient(60% 60% at 20% 20%, color-mix(in oklab, var(--primary) 20%, transparent), transparent 60%),
+      radial-gradient(50% 50% at 80% 30%, color-mix(in oklab, var(--chart-2) 18%, transparent), transparent 60%),
+      radial-gradient(60% 60% at 50% 90%, color-mix(in oklab, var(--chart-4) 14%, transparent), transparent 60%);
+    background-size: 180% 180%;
+    filter: blur(40px);
+    animation: aurora-drift 22s ease-in-out infinite alternate;
+  }
+
+  /* Frosted premium surface used by the creator profile card. */
+  .glass {
+    background: color-mix(in oklab, var(--surface) 55%, transparent);
+    border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+    border-radius: var(--radius-2xl);
+    box-shadow:
+      0 1px 0 0 color-mix(in oklab, oklch(1 0 0) 8%, transparent) inset,
+      0 30px 80px -40px oklch(0 0 0 / 0.9);
+    backdrop-filter: blur(22px) saturate(140%);
+  }
+
+  .text-shimmer {
+    background: linear-gradient(
+      100deg,
+      var(--foreground) 30%,
+      color-mix(in oklab, var(--primary) 90%, white) 50%,
+      var(--foreground) 70%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer-sweep 6s linear infinite;
+  }
 }
+
+/* Global click ripple (injected by RippleLayer). */
+.ui-ripple {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  transform: scale(0);
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--primary) 40%, transparent) 0%,
+    transparent 70%
+  );
+  animation: ripple-out 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes ripple-out {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes aurora-drift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 20% 100%;
+  }
+}
+
+@keyframes shimmer-sweep {
+  to {
+    background-position: -220% 0;
+  }
+}
+
 
 /* Premium micro-interactions: every button/link eases, and pressing gives a
    tactile scale-down. Kept global so it applies without touching components. */
