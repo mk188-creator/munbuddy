@@ -279,7 +279,7 @@ export function MouseGlow() {
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed z-[5] hidden size-[26rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-3xl md:block"
+      className="pointer-events-none fixed z-[5] hidden size-[26rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-25 mix-blend-screen blur-3xl md:block"
       style={{
         x,
         y,
