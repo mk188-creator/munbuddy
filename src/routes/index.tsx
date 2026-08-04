@@ -102,14 +102,14 @@ function Landing() {
         <motion.div
           aria-hidden
           className="aurora pointer-events-none absolute -top-56 left-1/2 size-[46rem] -translate-x-1/2 rounded-full opacity-60"
-          style={reduce ? undefined : { y: parallax }}
+          style={{ y: parallax }}
         />
         <Particles />
         <FloatingGlass />
 
         <motion.div
           className="relative mx-auto max-w-3xl text-center"
-          style={reduce ? undefined : { y: parallaxSlow }}
+          style={{ y: parallaxSlow }}
         >
           <motion.span
             initial={{ opacity: 0, y: 12 }}
@@ -191,7 +191,7 @@ function Landing() {
                 <article className="panel h-full p-6">
                   <motion.span
                     className="inline-flex size-10 items-center justify-center rounded-lg bg-accent text-accent-foreground"
-                    animate={reduce ? undefined : { y: [0, -4, 0] }}
+                    animate={{ y: reduce ? 0 : [0, -4, 0] }}
                     transition={{ duration: 4 + i, repeat: Infinity, ease: "easeInOut" }}
                   >
                     <item.icon className="size-5" />
