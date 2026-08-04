@@ -72,20 +72,28 @@ export function TiltCard({
         mx.set(0.5);
         my.set(0.5);
       }}
-      style={reduce ? undefined : { rotateX: rx, rotateY: ry, transformPerspective: 900 }}
-      whileHover={reduce ? undefined : { y: -4 }}
+      {...(reduce
+        ? {}
+        : {
+            style: { rotateX: rx, rotateY: ry, transformPerspective: 900 },
+            whileHover: { y: -4 },
+          })}
       transition={{ type: "spring", stiffness: 220, damping: 20 }}
       className={cn("group relative [transform-style:preserve-3d]", className)}
     >
       <motion.span
         aria-hidden
         className="pointer-events-none absolute inset-0 z-10 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{
-          background: `radial-gradient(240px circle at ${"var(--gx)"} ${"var(--gy)"}, color-mix(in oklab, var(--primary) 16%, transparent), transparent 70%)`,
-          ["--gx" as string]: glowX,
-          ["--gy" as string]: glowY,
-        }}
+        style={
+          {
+            background:
+              "radial-gradient(240px circle at var(--gx) var(--gy), color-mix(in oklab, var(--primary) 16%, transparent), transparent 70%)",
+            "--gx": glowX,
+            "--gy": glowY,
+          } as never
+        }
       />
+
       <div className="relative [transform:translateZ(0)]">{children}</div>
     </motion.div>
   );
