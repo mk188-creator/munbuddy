@@ -83,7 +83,6 @@ export function CrateOpener({
   return (
     <Dialog open={open} onOpenChange={(next) => !next && onClose()}>
       <DialogContent
-        showCloseButton={false}
         className="max-w-md overflow-hidden border-border/60 bg-background/85 backdrop-blur-2xl"
       >
         <div className="relative flex min-h-[320px] flex-col items-center justify-center gap-6 py-4">
