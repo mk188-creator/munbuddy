@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      achievements: {
+        Row: {
+          coin_reward: number
+          cosmetic_key: string | null
+          crate_reward: string | null
+          created_at: string
+          description: string
+          goal: number
+          icon: string
+          id: string
+          key: string
+          metric: string
+          rarity: string
+          title: string
+          xp_reward: number
+        }
+        Insert: {
+          coin_reward?: number
+          cosmetic_key?: string | null
+          crate_reward?: string | null
+          created_at?: string
+          description?: string
+          goal?: number
+          icon?: string
+          id?: string
+          key: string
+          metric?: string
+          rarity?: string
+          title: string
+          xp_reward?: number
+        }
+        Update: {
+          coin_reward?: number
+          cosmetic_key?: string | null
+          crate_reward?: string | null
+          created_at?: string
+          description?: string
+          goal?: number
+          icon?: string
+          id?: string
+          key?: string
+          metric?: string
+          rarity?: string
+          title?: string
+          xp_reward?: number
+        }
+        Relationships: []
+      }
       ai_usage: {
         Row: {
           created_at: string
@@ -76,6 +124,48 @@ export type Database = {
           },
         ]
       }
+      chat_mutes: {
+        Row: {
+          created_at: string
+          expires_at: string | null
+          id: string
+          muted_by: string | null
+          reason: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          muted_by?: string | null
+          reason?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          muted_by?: string | null
+          reason?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      chat_reads: {
+        Row: {
+          last_read_at: string
+          user_id: string
+        }
+        Insert: {
+          last_read_at?: string
+          user_id: string
+        }
+        Update: {
+          last_read_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       chat_threads: {
         Row: {
           created_at: string
@@ -102,6 +192,80 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      chat_warnings: {
+        Row: {
+          created_at: string
+          id: string
+          issued_by: string | null
+          reason: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          issued_by?: string | null
+          reason?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          issued_by?: string | null
+          reason?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      community_messages: {
+        Row: {
+          announcement: boolean
+          body: string
+          created_at: string
+          deleted: boolean
+          id: string
+          image_url: string | null
+          mentions: Json
+          pinned: boolean
+          reply_to: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          announcement?: boolean
+          body?: string
+          created_at?: string
+          deleted?: boolean
+          id?: string
+          image_url?: string | null
+          mentions?: Json
+          pinned?: boolean
+          reply_to?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          announcement?: boolean
+          body?: string
+          created_at?: string
+          deleted?: boolean
+          id?: string
+          image_url?: string | null
+          mentions?: Json
+          pinned?: boolean
+          reply_to?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_messages_reply_to_fkey"
+            columns: ["reply_to"]
+            isOneToOne: false
+            referencedRelation: "community_messages"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       conference_bookmarks: {
         Row: {
@@ -219,6 +383,69 @@ export type Database = {
         }
         Relationships: []
       }
+      cosmetics: {
+        Row: {
+          created_at: string
+          founder_only: boolean
+          id: string
+          key: string
+          kind: string
+          name: string
+          payload: Json
+          price: number
+          rarity: string
+          seasonal: boolean
+        }
+        Insert: {
+          created_at?: string
+          founder_only?: boolean
+          id?: string
+          key: string
+          kind: string
+          name: string
+          payload?: Json
+          price?: number
+          rarity?: string
+          seasonal?: boolean
+        }
+        Update: {
+          created_at?: string
+          founder_only?: boolean
+          id?: string
+          key?: string
+          kind?: string
+          name?: string
+          payload?: Json
+          price?: number
+          rarity?: string
+          seasonal?: boolean
+        }
+        Relationships: []
+      }
+      crate_openings: {
+        Row: {
+          created_at: string
+          id: string
+          rarity: string
+          reward: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          rarity: string
+          reward?: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          rarity?: string
+          reward?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
       documents: {
         Row: {
           content: string
@@ -281,51 +508,489 @@ export type Database = {
         }
         Relationships: []
       }
+      message_reactions: {
+        Row: {
+          created_at: string
+          emoji: string
+          id: string
+          message_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          emoji: string
+          id?: string
+          message_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          emoji?: string
+          id?: string
+          message_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_reactions_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "community_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mission_templates: {
+        Row: {
+          active: boolean
+          cadence: string
+          coin_reward: number
+          crate_reward: string | null
+          created_at: string
+          description: string
+          goal: number
+          id: string
+          key: string
+          metric: string
+          title: string
+          xp_reward: number
+        }
+        Insert: {
+          active?: boolean
+          cadence?: string
+          coin_reward?: number
+          crate_reward?: string | null
+          created_at?: string
+          description?: string
+          goal?: number
+          id?: string
+          key: string
+          metric: string
+          title: string
+          xp_reward?: number
+        }
+        Update: {
+          active?: boolean
+          cadence?: string
+          coin_reward?: number
+          crate_reward?: string | null
+          created_at?: string
+          description?: string
+          goal?: number
+          id?: string
+          key?: string
+          metric?: string
+          title?: string
+          xp_reward?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
           bio: string
           country: string
           created_at: string
+          display_name: string
           email_notifications: boolean
+          equipped_background: string | null
+          equipped_chat_effect: string | null
+          equipped_frame: string | null
+          equipped_rank: string | null
+          equipped_title: string | null
           full_name: string
           id: string
+          last_seen_at: string
           mun_experience: string
           product_updates: boolean
           public_profile: boolean
           school: string
+          showcase: Json
           theme: string
           updated_at: string
+          username: string
         }
         Insert: {
           avatar_url?: string | null
           bio?: string
           country?: string
           created_at?: string
+          display_name?: string
           email_notifications?: boolean
+          equipped_background?: string | null
+          equipped_chat_effect?: string | null
+          equipped_frame?: string | null
+          equipped_rank?: string | null
+          equipped_title?: string | null
           full_name?: string
           id: string
+          last_seen_at?: string
           mun_experience?: string
           product_updates?: boolean
           public_profile?: boolean
           school?: string
+          showcase?: Json
           theme?: string
           updated_at?: string
+          username: string
         }
         Update: {
           avatar_url?: string | null
           bio?: string
           country?: string
           created_at?: string
+          display_name?: string
           email_notifications?: boolean
+          equipped_background?: string | null
+          equipped_chat_effect?: string | null
+          equipped_frame?: string | null
+          equipped_rank?: string | null
+          equipped_title?: string | null
           full_name?: string
           id?: string
+          last_seen_at?: string
           mun_experience?: string
           product_updates?: boolean
           public_profile?: boolean
           school?: string
+          showcase?: Json
           theme?: string
           updated_at?: string
+          username?: string
+        }
+        Relationships: []
+      }
+      ranks: {
+        Row: {
+          animation: string
+          color: string
+          created_at: string
+          icon: string
+          id: string
+          key: string
+          label: string
+          min_level: number
+          priority: number
+          updated_at: string
+        }
+        Insert: {
+          animation?: string
+          color?: string
+          created_at?: string
+          icon?: string
+          id?: string
+          key: string
+          label: string
+          min_level?: number
+          priority?: number
+          updated_at?: string
+        }
+        Update: {
+          animation?: string
+          color?: string
+          created_at?: string
+          icon?: string
+          id?: string
+          key?: string
+          label?: string
+          min_level?: number
+          priority?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      shop_rotation: {
+        Row: {
+          cosmetic_id: string
+          created_at: string
+          discount_pct: number
+          featured: boolean
+          id: string
+          rotation_date: string
+        }
+        Insert: {
+          cosmetic_id: string
+          created_at?: string
+          discount_pct?: number
+          featured?: boolean
+          id?: string
+          rotation_date: string
+        }
+        Update: {
+          cosmetic_id?: string
+          created_at?: string
+          discount_pct?: number
+          featured?: boolean
+          id?: string
+          rotation_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shop_rotation_cosmetic_id_fkey"
+            columns: ["cosmetic_id"]
+            isOneToOne: false
+            referencedRelation: "cosmetics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_achievements: {
+        Row: {
+          achievement_id: string
+          created_at: string
+          id: string
+          progress: number
+          unlocked_at: string | null
+          user_id: string
+        }
+        Insert: {
+          achievement_id: string
+          created_at?: string
+          id?: string
+          progress?: number
+          unlocked_at?: string | null
+          user_id: string
+        }
+        Update: {
+          achievement_id?: string
+          created_at?: string
+          id?: string
+          progress?: number
+          unlocked_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_achievements_achievement_id_fkey"
+            columns: ["achievement_id"]
+            isOneToOne: false
+            referencedRelation: "achievements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_cosmetics: {
+        Row: {
+          acquired_from: string
+          cosmetic_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          acquired_from?: string
+          cosmetic_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          acquired_from?: string
+          cosmetic_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_cosmetics_cosmetic_id_fkey"
+            columns: ["cosmetic_id"]
+            isOneToOne: false
+            referencedRelation: "cosmetics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_crates: {
+        Row: {
+          id: string
+          quantity: number
+          rarity: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          quantity?: number
+          rarity: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          quantity?: number
+          rarity?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_missions: {
+        Row: {
+          cadence: string
+          claimed_at: string | null
+          completed_at: string | null
+          created_at: string
+          id: string
+          period_start: string
+          progress: number
+          template_id: string
+          user_id: string
+        }
+        Insert: {
+          cadence?: string
+          claimed_at?: string | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          period_start: string
+          progress?: number
+          template_id: string
+          user_id: string
+        }
+        Update: {
+          cadence?: string
+          claimed_at?: string | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          period_start?: string
+          progress?: number
+          template_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_missions_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "mission_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_ranks: {
+        Row: {
+          created_at: string
+          id: string
+          rank_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          rank_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          rank_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_ranks_rank_id_fkey"
+            columns: ["rank_id"]
+            isOneToOne: false
+            referencedRelation: "ranks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_stats: {
+        Row: {
+          best_streak: number
+          coins: number
+          conference_count: number
+          crate_keys: number
+          created_at: string
+          last_login_date: string | null
+          level: number
+          lifetime_xp: number
+          login_streak: number
+          updated_at: string
+          user_id: string
+          xp: number
+        }
+        Insert: {
+          best_streak?: number
+          coins?: number
+          conference_count?: number
+          crate_keys?: number
+          created_at?: string
+          last_login_date?: string | null
+          level?: number
+          lifetime_xp?: number
+          login_streak?: number
+          updated_at?: string
+          user_id: string
+          xp?: number
+        }
+        Update: {
+          best_streak?: number
+          coins?: number
+          conference_count?: number
+          crate_keys?: number
+          created_at?: string
+          last_login_date?: string | null
+          level?: number
+          lifetime_xp?: number
+          login_streak?: number
+          updated_at?: string
+          user_id?: string
+          xp?: number
+        }
+        Relationships: []
+      }
+      xp_events: {
+        Row: {
+          amount: number
+          coins: number
+          created_at: string
+          id: string
+          meta: Json
+          source: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          coins?: number
+          created_at?: string
+          id?: string
+          meta?: Json
+          source: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          coins?: number
+          created_at?: string
+          id?: string
+          meta?: Json
+          source?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -334,10 +999,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_muted: { Args: { _user_id: string }; Returns: boolean }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "founder" | "admin" | "staff" | "moderator" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -464,6 +1137,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["founder", "admin", "staff", "moderator", "user"],
+    },
   },
 } as const
