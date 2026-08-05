@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Tables, TablesUpdate } from "@/integrations/supabase/types";
 import type { Rarity } from "@/lib/leveling";
 
 export const getGamificationState = createServerFn({ method: "GET" })
@@ -43,14 +44,14 @@ export const getGamificationState = createServerFn({ method: "GET" })
         cadence: m.cadence,
         completedAt: m.completed_at,
         claimedAt: m.claimed_at,
-        template: m.mission_templates as unknown as Record<string, unknown>,
+        template: m.mission_templates as unknown as Tables<"mission_templates">,
       })),
       achievements: achievements.data ?? [],
       unlocked: unlocked.data ?? [],
       crates: crates.data ?? [],
       inventory: (inventory.data ?? []).map((i) => ({
         acquiredFrom: i.acquired_from,
-        cosmetic: i.cosmetics as unknown as Record<string, unknown>,
+        cosmetic: i.cosmetics as unknown as Tables<"cosmetics">,
       })),
       ranks: ranks.data ?? [],
       myRankIds: (myRanks.data ?? []).map((r) => r.rank_id),
@@ -110,7 +111,7 @@ export const getShop = createServerFn({ method: "GET" })
       rotation: (rotation.data ?? []).map((r) => ({
         featured: r.featured,
         discount: r.discount_pct,
-        cosmetic: r.cosmetics as unknown as Record<string, unknown>,
+        cosmetic: r.cosmetics as unknown as Tables<"cosmetics">,
       })),
       catalog: all.data ?? [],
       ownedIds: (owned.data ?? []).map((o) => o.cosmetic_id),
@@ -158,7 +159,7 @@ export const equipCosmetic = createServerFn({ method: "POST" })
 
     const { error } = await context.supabase
       .from("profiles")
-      .update({ [column]: data.cosmeticId })
+      .update({ [column]: data.cosmeticId } as TablesUpdate<"profiles">)
       .eq("id", context.userId);
     if (error) throw new Error(error.message);
     return { ok: true };
@@ -284,8 +285,8 @@ export const getPublicProfile = createServerFn({ method: "GET" })
       profile,
       stats: stats.data,
       roles: (roles.data ?? []).map((r) => r.role as string),
-      achievements: (achievements.data ?? []).map((a) => a.achievements as unknown as Record<string, unknown>),
-      cosmetics: (inventory.data ?? []).map((c) => c.cosmetics as unknown as Record<string, unknown>),
+      achievements: (achievements.data ?? []).map((a) => a.achievements as unknown as Tables<"achievements">),
+      cosmetics: (inventory.data ?? []).map((c) => c.cosmetics as unknown as Tables<"cosmetics">),
       ranks: rankList.filter((r) => ownedRankIds.has(r.id)),
       equippedRank: profile.equipped_rank ? (rankList.find((r) => r.id === profile.equipped_rank) ?? null) : null,
       conferenceCount: conferences.count ?? 0,
