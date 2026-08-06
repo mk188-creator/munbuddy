@@ -83,7 +83,7 @@ function CommunityPage() {
   const send = useMutation({
     mutationFn: (body: string) => sendFn({ data: { body, replyTo: replyTo?.id ?? null } }),
     onSuccess: () => {
-      playSound("send");
+      playSound("notify");
       setDraft("");
       setReplyTo(null);
       void invalidate();
