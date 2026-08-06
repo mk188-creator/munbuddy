@@ -14,8 +14,14 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CreatorRouteImport } from './routes/creator'
 import { Route as AuthenticatedChatRouteImport } from './routes/_authenticated/chat'
+import { Route as AuthenticatedCommunityRouteImport } from './routes/_authenticated/community'
+import { Route as AuthenticatedCratesRouteImport } from './routes/_authenticated/crates'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedInventoryRouteImport } from './routes/_authenticated/inventory'
+import { Route as AuthenticatedLeaderboardRouteImport } from './routes/_authenticated/leaderboard'
+import { Route as AuthenticatedProgressRouteImport } from './routes/_authenticated/progress'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedShopRouteImport } from './routes/_authenticated/shop'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as HubIndexRouteImport } from './routes/hub.index'
 import { Route as HubSlugRouteImport } from './routes/hub.$slug'
@@ -26,6 +32,7 @@ import { Route as AuthenticatedDocumentsDocumentIdRouteImport } from './routes/_
 import { Route as AuthenticatedHubNewRouteImport } from './routes/_authenticated/hub.new'
 import { Route as AuthenticatedToolsIndexRouteImport } from './routes/_authenticated/tools.index'
 import { Route as AuthenticatedToolsToolIdRouteImport } from './routes/_authenticated/tools.$toolId'
+import { Route as AuthenticatedUUsernameRouteImport } from './routes/_authenticated/u.$username'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -51,14 +58,45 @@ const AuthenticatedChatRoute = AuthenticatedChatRouteImport.update({
   path: '/chat',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedCommunityRoute = AuthenticatedCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCratesRoute = AuthenticatedCratesRouteImport.update({
+  id: '/crates',
+  path: '/crates',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedInventoryRoute = AuthenticatedInventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedLeaderboardRoute =
+  AuthenticatedLeaderboardRouteImport.update({
+    id: '/leaderboard',
+    path: '/leaderboard',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedProgressRoute = AuthenticatedProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedShopRoute = AuthenticatedShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiChatRoute = ApiChatRouteImport.update({
@@ -115,14 +153,25 @@ const AuthenticatedToolsToolIdRoute =
     path: '/tools/$toolId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedUUsernameRoute = AuthenticatedUUsernameRouteImport.update({
+  id: '/u/$username',
+  path: '/u/$username',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/creator': typeof CreatorRoute
   '/chat': typeof AuthenticatedChatRouteWithChildren
+  '/community': typeof AuthenticatedCommunityRoute
+  '/crates': typeof AuthenticatedCratesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inventory': typeof AuthenticatedInventoryRoute
+  '/leaderboard': typeof AuthenticatedLeaderboardRoute
+  '/progress': typeof AuthenticatedProgressRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/shop': typeof AuthenticatedShopRoute
   '/api/chat': typeof ApiChatRoute
   '/hub/$slug': typeof HubSlugRoute
   '/hub/': typeof HubIndexRoute
@@ -130,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/hub/new': typeof AuthenticatedHubNewRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
+  '/u/$username': typeof AuthenticatedUUsernameRoute
   '/chat/': typeof AuthenticatedChatIndexRoute
   '/documents/': typeof AuthenticatedDocumentsIndexRoute
   '/tools/': typeof AuthenticatedToolsIndexRoute
@@ -138,8 +188,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/creator': typeof CreatorRoute
+  '/community': typeof AuthenticatedCommunityRoute
+  '/crates': typeof AuthenticatedCratesRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/inventory': typeof AuthenticatedInventoryRoute
+  '/leaderboard': typeof AuthenticatedLeaderboardRoute
+  '/progress': typeof AuthenticatedProgressRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/shop': typeof AuthenticatedShopRoute
   '/api/chat': typeof ApiChatRoute
   '/hub/$slug': typeof HubSlugRoute
   '/hub': typeof HubIndexRoute
@@ -147,6 +203,7 @@ export interface FileRoutesByTo {
   '/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/hub/new': typeof AuthenticatedHubNewRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
+  '/u/$username': typeof AuthenticatedUUsernameRoute
   '/chat': typeof AuthenticatedChatIndexRoute
   '/documents': typeof AuthenticatedDocumentsIndexRoute
   '/tools': typeof AuthenticatedToolsIndexRoute
@@ -158,8 +215,14 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/creator': typeof CreatorRoute
   '/_authenticated/chat': typeof AuthenticatedChatRouteWithChildren
+  '/_authenticated/community': typeof AuthenticatedCommunityRoute
+  '/_authenticated/crates': typeof AuthenticatedCratesRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/inventory': typeof AuthenticatedInventoryRoute
+  '/_authenticated/leaderboard': typeof AuthenticatedLeaderboardRoute
+  '/_authenticated/progress': typeof AuthenticatedProgressRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/shop': typeof AuthenticatedShopRoute
   '/api/chat': typeof ApiChatRoute
   '/hub/$slug': typeof HubSlugRoute
   '/hub/': typeof HubIndexRoute
@@ -167,6 +230,7 @@ export interface FileRoutesById {
   '/_authenticated/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/_authenticated/hub/new': typeof AuthenticatedHubNewRoute
   '/_authenticated/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
+  '/_authenticated/u/$username': typeof AuthenticatedUUsernameRoute
   '/_authenticated/chat/': typeof AuthenticatedChatIndexRoute
   '/_authenticated/documents/': typeof AuthenticatedDocumentsIndexRoute
   '/_authenticated/tools/': typeof AuthenticatedToolsIndexRoute
@@ -178,8 +242,14 @@ export interface FileRouteTypes {
     | '/auth'
     | '/creator'
     | '/chat'
+    | '/community'
+    | '/crates'
     | '/dashboard'
+    | '/inventory'
+    | '/leaderboard'
+    | '/progress'
     | '/settings'
+    | '/shop'
     | '/api/chat'
     | '/hub/$slug'
     | '/hub/'
@@ -187,6 +257,7 @@ export interface FileRouteTypes {
     | '/documents/$documentId'
     | '/hub/new'
     | '/tools/$toolId'
+    | '/u/$username'
     | '/chat/'
     | '/documents/'
     | '/tools/'
@@ -195,8 +266,14 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/creator'
+    | '/community'
+    | '/crates'
     | '/dashboard'
+    | '/inventory'
+    | '/leaderboard'
+    | '/progress'
     | '/settings'
+    | '/shop'
     | '/api/chat'
     | '/hub/$slug'
     | '/hub'
@@ -204,6 +281,7 @@ export interface FileRouteTypes {
     | '/documents/$documentId'
     | '/hub/new'
     | '/tools/$toolId'
+    | '/u/$username'
     | '/chat'
     | '/documents'
     | '/tools'
@@ -214,8 +292,14 @@ export interface FileRouteTypes {
     | '/auth'
     | '/creator'
     | '/_authenticated/chat'
+    | '/_authenticated/community'
+    | '/_authenticated/crates'
     | '/_authenticated/dashboard'
+    | '/_authenticated/inventory'
+    | '/_authenticated/leaderboard'
+    | '/_authenticated/progress'
     | '/_authenticated/settings'
+    | '/_authenticated/shop'
     | '/api/chat'
     | '/hub/$slug'
     | '/hub/'
@@ -223,6 +307,7 @@ export interface FileRouteTypes {
     | '/_authenticated/documents/$documentId'
     | '/_authenticated/hub/new'
     | '/_authenticated/tools/$toolId'
+    | '/_authenticated/u/$username'
     | '/_authenticated/chat/'
     | '/_authenticated/documents/'
     | '/_authenticated/tools/'
@@ -275,6 +360,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedChatRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/community': {
+      id: '/_authenticated/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof AuthenticatedCommunityRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/crates': {
+      id: '/_authenticated/crates'
+      path: '/crates'
+      fullPath: '/crates'
+      preLoaderRoute: typeof AuthenticatedCratesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -282,11 +381,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/inventory': {
+      id: '/_authenticated/inventory'
+      path: '/inventory'
+      fullPath: '/inventory'
+      preLoaderRoute: typeof AuthenticatedInventoryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/leaderboard': {
+      id: '/_authenticated/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof AuthenticatedLeaderboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/progress': {
+      id: '/_authenticated/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof AuthenticatedProgressRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/settings': {
       id: '/_authenticated/settings'
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/shop': {
+      id: '/_authenticated/shop'
+      path: '/shop'
+      fullPath: '/shop'
+      preLoaderRoute: typeof AuthenticatedShopRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/chat': {
@@ -359,6 +486,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedToolsToolIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/u/$username': {
+      id: '/_authenticated/u/$username'
+      path: '/u/$username'
+      fullPath: '/u/$username'
+      preLoaderRoute: typeof AuthenticatedUUsernameRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -377,22 +511,36 @@ const AuthenticatedChatRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedChatRoute: typeof AuthenticatedChatRouteWithChildren
+  AuthenticatedCommunityRoute: typeof AuthenticatedCommunityRoute
+  AuthenticatedCratesRoute: typeof AuthenticatedCratesRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedInventoryRoute: typeof AuthenticatedInventoryRoute
+  AuthenticatedLeaderboardRoute: typeof AuthenticatedLeaderboardRoute
+  AuthenticatedProgressRoute: typeof AuthenticatedProgressRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
+  AuthenticatedShopRoute: typeof AuthenticatedShopRoute
   AuthenticatedDocumentsDocumentIdRoute: typeof AuthenticatedDocumentsDocumentIdRoute
   AuthenticatedHubNewRoute: typeof AuthenticatedHubNewRoute
   AuthenticatedToolsToolIdRoute: typeof AuthenticatedToolsToolIdRoute
+  AuthenticatedUUsernameRoute: typeof AuthenticatedUUsernameRoute
   AuthenticatedDocumentsIndexRoute: typeof AuthenticatedDocumentsIndexRoute
   AuthenticatedToolsIndexRoute: typeof AuthenticatedToolsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedChatRoute: AuthenticatedChatRouteWithChildren,
+  AuthenticatedCommunityRoute: AuthenticatedCommunityRoute,
+  AuthenticatedCratesRoute: AuthenticatedCratesRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedInventoryRoute: AuthenticatedInventoryRoute,
+  AuthenticatedLeaderboardRoute: AuthenticatedLeaderboardRoute,
+  AuthenticatedProgressRoute: AuthenticatedProgressRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
+  AuthenticatedShopRoute: AuthenticatedShopRoute,
   AuthenticatedDocumentsDocumentIdRoute: AuthenticatedDocumentsDocumentIdRoute,
   AuthenticatedHubNewRoute: AuthenticatedHubNewRoute,
   AuthenticatedToolsToolIdRoute: AuthenticatedToolsToolIdRoute,
+  AuthenticatedUUsernameRoute: AuthenticatedUUsernameRoute,
   AuthenticatedDocumentsIndexRoute: AuthenticatedDocumentsIndexRoute,
   AuthenticatedToolsIndexRoute: AuthenticatedToolsIndexRoute,
 }
