@@ -53,7 +53,7 @@ function Stat({
         <span className="text-xs font-medium uppercase tracking-wide">{label}</span>
       </div>
       <p className="mt-2 font-display text-2xl font-semibold tabular-nums">
-        <Counter value={value} />
+        <Counter to={value} />
       </p>
       {hint && <p className="text-[11px] text-muted-foreground">{hint}</p>}
     </motion.div>
