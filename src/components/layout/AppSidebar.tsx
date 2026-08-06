@@ -7,6 +7,12 @@ import {
   Globe2,
   Settings,
   LogOut,
+  Trophy,
+  Sparkles,
+  ShoppingBag,
+  Package,
+  Backpack,
+  Hash,
 } from "lucide-react";
 
 import logo from "@/assets/mun-hub-logo.png";
@@ -32,8 +38,19 @@ const items = [
   { title: "Tools", url: "/tools", icon: Wrench },
   { title: "Documents", url: "/documents", icon: FileText },
   { title: "MUN Hub", url: "/hub", icon: Globe2 },
-  { title: "Settings", url: "/settings", icon: Settings },
 ];
+
+const playItems = [
+  { title: "Progress", url: "/progress", icon: Sparkles },
+  { title: "Crates", url: "/crates", icon: Package },
+  { title: "Shop", url: "/shop", icon: ShoppingBag },
+  { title: "Inventory", url: "/inventory", icon: Backpack },
+  { title: "Leaderboards", url: "/leaderboard", icon: Trophy },
+  { title: "Community", url: "/community", icon: Hash },
+];
+
+const accountItems = [{ title: "Settings", url: "/settings", icon: Settings }];
+
 
 export function AppSidebar() {
   const { state } = useSidebar();
