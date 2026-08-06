@@ -31,6 +31,7 @@ import { Route as AuthenticatedDocumentsDocumentIdRouteImport } from './routes/_
 import { Route as AuthenticatedHubNewRouteImport } from './routes/_authenticated/hub.new'
 import { Route as AuthenticatedToolsIndexRouteImport } from './routes/_authenticated/tools.index'
 import { Route as AuthenticatedToolsToolIdRouteImport } from './routes/_authenticated/tools.$toolId'
+import { Route as AuthenticatedUUsernameRouteImport } from './routes/_authenticated/u.$username'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -146,6 +147,11 @@ const AuthenticatedToolsToolIdRoute =
     path: '/tools/$toolId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedUUsernameRoute = AuthenticatedUUsernameRouteImport.update({
+  id: '/u/$username',
+  path: '/u/$username',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -166,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/hub/new': typeof AuthenticatedHubNewRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
+  '/u/$username': typeof AuthenticatedUUsernameRoute
   '/chat/': typeof AuthenticatedChatIndexRoute
   '/documents/': typeof AuthenticatedDocumentsIndexRoute
   '/tools/': typeof AuthenticatedToolsIndexRoute
@@ -188,6 +195,7 @@ export interface FileRoutesByTo {
   '/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/hub/new': typeof AuthenticatedHubNewRoute
   '/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
+  '/u/$username': typeof AuthenticatedUUsernameRoute
   '/chat': typeof AuthenticatedChatIndexRoute
   '/documents': typeof AuthenticatedDocumentsIndexRoute
   '/tools': typeof AuthenticatedToolsIndexRoute
@@ -213,6 +221,7 @@ export interface FileRoutesById {
   '/_authenticated/documents/$documentId': typeof AuthenticatedDocumentsDocumentIdRoute
   '/_authenticated/hub/new': typeof AuthenticatedHubNewRoute
   '/_authenticated/tools/$toolId': typeof AuthenticatedToolsToolIdRoute
+  '/_authenticated/u/$username': typeof AuthenticatedUUsernameRoute
   '/_authenticated/chat/': typeof AuthenticatedChatIndexRoute
   '/_authenticated/documents/': typeof AuthenticatedDocumentsIndexRoute
   '/_authenticated/tools/': typeof AuthenticatedToolsIndexRoute
@@ -238,6 +247,7 @@ export interface FileRouteTypes {
     | '/documents/$documentId'
     | '/hub/new'
     | '/tools/$toolId'
+    | '/u/$username'
     | '/chat/'
     | '/documents/'
     | '/tools/'
@@ -260,6 +270,7 @@ export interface FileRouteTypes {
     | '/documents/$documentId'
     | '/hub/new'
     | '/tools/$toolId'
+    | '/u/$username'
     | '/chat'
     | '/documents'
     | '/tools'
@@ -284,6 +295,7 @@ export interface FileRouteTypes {
     | '/_authenticated/documents/$documentId'
     | '/_authenticated/hub/new'
     | '/_authenticated/tools/$toolId'
+    | '/_authenticated/u/$username'
     | '/_authenticated/chat/'
     | '/_authenticated/documents/'
     | '/_authenticated/tools/'
@@ -455,6 +467,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedToolsToolIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/u/$username': {
+      id: '/_authenticated/u/$username'
+      path: '/u/$username'
+      fullPath: '/u/$username'
+      preLoaderRoute: typeof AuthenticatedUUsernameRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -483,6 +502,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedDocumentsDocumentIdRoute: typeof AuthenticatedDocumentsDocumentIdRoute
   AuthenticatedHubNewRoute: typeof AuthenticatedHubNewRoute
   AuthenticatedToolsToolIdRoute: typeof AuthenticatedToolsToolIdRoute
+  AuthenticatedUUsernameRoute: typeof AuthenticatedUUsernameRoute
   AuthenticatedDocumentsIndexRoute: typeof AuthenticatedDocumentsIndexRoute
   AuthenticatedToolsIndexRoute: typeof AuthenticatedToolsIndexRoute
 }
@@ -499,6 +519,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDocumentsDocumentIdRoute: AuthenticatedDocumentsDocumentIdRoute,
   AuthenticatedHubNewRoute: AuthenticatedHubNewRoute,
   AuthenticatedToolsToolIdRoute: AuthenticatedToolsToolIdRoute,
+  AuthenticatedUUsernameRoute: AuthenticatedUUsernameRoute,
   AuthenticatedDocumentsIndexRoute: AuthenticatedDocumentsIndexRoute,
   AuthenticatedToolsIndexRoute: AuthenticatedToolsIndexRoute,
 }
