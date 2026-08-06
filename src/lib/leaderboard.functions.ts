@@ -130,3 +130,22 @@ export const toggleFriend = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { following: true };
   });
+
+export const getFriendState = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: { userId: string }) => input)
+  .handler(async ({ data, context }) => {
+    const [{ data: mine }, { count: followers }] = await Promise.all([
+      context.supabase
+        .from("friends")
+        .select("id")
+        .eq("user_id", context.userId)
+        .eq("friend_id", data.userId)
+        .maybeSingle(),
+      context.supabase
+        .from("friends")
+        .select("id", { count: "exact", head: true })
+        .eq("friend_id", data.userId),
+    ]);
+    return { following: Boolean(mine), followers: followers ?? 0, isMe: data.userId === context.userId };
+  });
