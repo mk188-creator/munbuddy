@@ -65,7 +65,7 @@ export function InkGlobe({ className }: { className?: string }) {
 
           {/* rotating meridians */}
           <motion.g
-            animate={reduce ? undefined : { rotateY: 360 }}
+            animate={reduce ? { rotateY: 0 } : { rotateY: 360 }}
             transition={{ duration: 26, repeat: Infinity, ease: "linear" }}
             style={{ transformOrigin: "110px 110px", transformStyle: "preserve-3d" }}
           >
@@ -86,7 +86,7 @@ export function InkGlobe({ className }: { className?: string }) {
 
           {/* diplomatic arcs */}
           {NODES.slice(0, 4).map((node, i) => {
-            const next = NODES[(i + 2) % NODES.length];
+            const next = NODES[(i + 2) % NODES.length]!;
             return (
               <motion.path
                 key={`arc-${i}`}
