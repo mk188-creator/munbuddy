@@ -30,7 +30,7 @@ export function ConferenceCard({ conference, bookmarked, onToggleBookmark, onSha
             className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="size-full opacity-30" style={{ background: "var(--gradient-emerald)" }} />
+          <div className="halftone size-full opacity-40" />
         )}
         <div className="absolute right-2 top-2 flex gap-1.5">
           <Button

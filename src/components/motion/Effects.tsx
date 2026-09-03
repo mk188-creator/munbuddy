@@ -85,8 +85,7 @@ export function LoadingScreen() {
         >
           <div className="flex flex-col items-center gap-4">
             <motion.span
-              className="size-10 rounded-2xl"
-              style={{ background: "var(--gradient-emerald)" }}
+              className="size-10 border-2 border-foreground bg-foreground"
               animate={{ rotate: [0, 90, 180, 270, 360], borderRadius: ["30%", "50%", "30%"] }}
               transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
             />
