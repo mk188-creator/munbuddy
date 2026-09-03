@@ -99,7 +99,7 @@ function Dashboard() {
         <section>
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="flex items-center gap-3 font-display text-xl font-extrabold">
-              <SectionMark>01</SectionMark> Recent dispatches
+              <SectionMark no="01" label="Recent dispatches" />
             </h2>
             <Link to="/chat" className="pen-link font-mono text-[11px] uppercase tracking-widest">
               View all
@@ -141,7 +141,7 @@ function Dashboard() {
         {/* Instruments */}
         <section className="relative">
           <h2 className="flex items-center gap-3 font-display text-xl font-extrabold">
-            <SectionMark>02</SectionMark> Instruments
+            <SectionMark no="02" label="Instruments" />
           </h2>
           <SketchRule className="mt-3" />
 
