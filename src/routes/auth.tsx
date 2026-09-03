@@ -4,7 +4,6 @@ import { toast } from "sonner";
 
 import logo from "@/assets/mun-hub-logo.png";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -90,24 +89,16 @@ function AuthPage() {
   };
 
 
-  const google = async () => {
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (result.error) toast.error("Google sign-in failed. Please try again.");
-  };
-
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-12">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 size-[36rem] -translate-x-1/2 rounded-full opacity-25 blur-3xl"
-        style={{ background: "var(--gradient-emerald)" }}
+        className="aurora pointer-events-none absolute -top-40 left-1/2 size-[36rem] -translate-x-1/2"
       />
       <div className="relative w-full max-w-md">
         <Link to="/" className="mb-8 flex items-center justify-center gap-3">
-          <img src={logo} alt="MUN Hub" className="size-10 rounded-xl" />
-          <span className="font-display text-xl font-semibold">MUN Hub</span>
+          <img src={logo} alt="MUN Hub" className="size-10 border-2 border-foreground bg-background" />
+          <span className="font-display text-xl font-extrabold tracking-tight">MUN Hub</span>
         </Link>
 
         <div className="panel p-6 sm:p-8">
@@ -193,15 +184,6 @@ function AuthPage() {
                 </form>
               </TabsContent>
 
-              <div className="my-6 flex items-center gap-3">
-                <span className="h-px flex-1 bg-border" />
-                <span className="text-xs text-muted-foreground">or</span>
-                <span className="h-px flex-1 bg-border" />
-              </div>
-
-              <Button variant="surface" className="w-full" onClick={() => void google()}>
-                Continue with Google
-              </Button>
             </Tabs>
           )}
         </div>

@@ -65,11 +65,9 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <Link to="/dashboard" className="flex items-center gap-2.5 px-2 py-3">
-          <img src={logo} alt="MUN Hub" className="size-8 shrink-0 rounded-lg" />
+          <img src={logo} alt="MUN Hub" className="size-8 shrink-0 border-2 border-foreground bg-background" />
           {!collapsed && (
-            <span className="font-display text-base font-semibold tracking-tight">
-              MUN Hub
-            </span>
+            <span className="font-display text-base font-extrabold tracking-tight">MUN Hub</span>
           )}
         </Link>
       </SidebarHeader>

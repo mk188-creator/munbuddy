@@ -114,7 +114,7 @@ function ProfilePage() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="relative overflow-hidden rounded-2xl border border-border/70 bg-card/60 backdrop-blur"
+        className="relative overflow-hidden panel"
       >
         <div className="h-28 bg-[linear-gradient(120deg,color-mix(in_oklab,var(--primary)_35%,transparent),transparent_70%)]" />
         <div className="flex flex-wrap items-end gap-4 px-5 pb-5">
@@ -170,7 +170,7 @@ function ProfilePage() {
       </motion.section>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-2xl border border-border/70 bg-card/60 p-5 backdrop-blur">
+        <div className="panel p-5">
           <XPBar level={level} xp={stats?.xp ?? 0} lifetimeXp={Number(stats?.lifetime_xp ?? 0)} />
           <div className="mt-4 grid grid-cols-3 gap-3 text-center text-xs">
             <div>
@@ -240,7 +240,7 @@ function ProfilePage() {
       </div>
 
       {ranks.length > 0 && (
-        <section className="mt-4 rounded-2xl border border-border/70 bg-card/60 p-5 backdrop-blur">
+        <section className="mt-4 panel p-5">
           <h2 className="font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">Ranks</h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {ranks.map((rank) => (
@@ -250,7 +250,7 @@ function ProfilePage() {
         </section>
       )}
 
-      <section className="mt-4 rounded-2xl border border-border/70 bg-card/60 p-5 backdrop-blur">
+      <section className="mt-4 panel p-5">
         <h2 className="font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">
           Achievements ({achievements.length})
         </h2>
@@ -282,7 +282,7 @@ function ProfilePage() {
         </div>
       </section>
 
-      <section className="mt-4 rounded-2xl border border-border/70 bg-card/60 p-5 backdrop-blur">
+      <section className="mt-4 panel p-5">
         <h2 className="font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">
           Cosmetics ({cosmetics.length})
         </h2>

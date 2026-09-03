@@ -58,27 +58,41 @@ function CommunityPage() {
 
   const invalidate = () => queryClient.invalidateQueries({ queryKey: ["community"] });
 
+  // Realtime events arrive in bursts; coalesce them so a single burst can't
+  // trigger a refetch storm (the old cause of the mobile chat freeze).
+  const refetchTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
+    const schedule = () => {
+      if (refetchTimer.current) return;
+      refetchTimer.current = setTimeout(() => {
+        refetchTimer.current = null;
+        void queryClient.invalidateQueries({ queryKey: ["community"] });
+      }, 350);
+    };
     const channel = supabase
       .channel("community-feed")
-      .on("postgres_changes", { event: "*", schema: "public", table: "community_messages" }, () => {
-        void invalidate();
-      })
-      .on("postgres_changes", { event: "*", schema: "public", table: "message_reactions" }, () => {
-        void invalidate();
-      })
+      .on("postgres_changes", { event: "*", schema: "public", table: "community_messages" }, schedule)
+      .on("postgres_changes", { event: "*", schema: "public", table: "message_reactions" }, schedule)
       .subscribe();
     return () => {
+      if (refetchTimer.current) clearTimeout(refetchTimer.current);
+      refetchTimer.current = null;
       void supabase.removeChannel(channel);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Mark-read writes to the database, so run it only when the newest message
+  // actually changes — never on every render/refetch.
+  const lastSeen = useRef<string | null>(null);
+  const latestId = feed.data?.messages.at(-1)?.id ?? null;
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (!latestId || lastSeen.current === latestId) return;
+    lastSeen.current = latestId;
+    bottomRef.current?.scrollIntoView({ block: "end" });
     void markReadFn({});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [feed.data?.messages.length]);
+  }, [latestId]);
 
   const send = useMutation({
     mutationFn: (body: string) => sendFn({ data: { body, replyTo: replyTo?.id ?? null } }),
@@ -151,7 +165,7 @@ function CommunityPage() {
         </div>
       ) : null}
 
-      <div className="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-border/70 bg-card/50 p-3 backdrop-blur">
+      <div className="min-h-0 flex-1 overflow-y-auto panel p-3">
         {feed.isLoading ? (
           <div className="space-y-3">
             {Array.from({ length: 6 }, (_, i) => (
@@ -319,15 +333,25 @@ function CommunityPage() {
             </Button>
           </div>
         )}
-        <div className="flex items-center gap-2">
+        <div className="ink-card flex items-end gap-2 p-2">
+          <span className="kicker hidden shrink-0 select-none pb-2.5 pl-1 sm:block">Floor</span>
           <Input
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
-            placeholder={data?.muted ? "You are muted." : "Message the global community…"}
+            placeholder={data?.muted ? "You are muted." : "Address the floor…"}
             disabled={data?.muted}
             maxLength={1200}
+            className="border-0 bg-transparent shadow-none focus-visible:ring-0"
           />
-          <Button type="submit" size="icon" aria-label="Send" disabled={data?.muted || send.isPending}>
+          <span className="hidden pb-2.5 font-mono text-[10px] text-muted-foreground sm:block">
+            {draft.length}/1200
+          </span>
+          <Button
+            type="submit"
+            size="icon"
+            aria-label="Send"
+            disabled={data?.muted || send.isPending}
+          >
             <Send className="size-4" />
           </Button>
         </div>

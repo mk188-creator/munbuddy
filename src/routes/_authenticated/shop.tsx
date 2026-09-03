@@ -111,7 +111,7 @@ function ShopPage() {
             Rotation for {shop.data.day} — new featured items every 24 hours.
           </p>
         </div>
-        <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/60 px-3 py-1.5 text-sm font-semibold tabular-nums backdrop-blur">
+        <span className="inline-flex items-center gap-2 tag rounded-none px-3 py-1.5 text-sm font-semibold tabular-nums backdrop-blur">
           <Coins className="size-4 text-primary" />
           {coins.toLocaleString()}
         </span>
@@ -134,7 +134,7 @@ function ShopPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                   className={cn(
-                    "relative overflow-hidden rounded-xl border border-border/70 bg-card/60 p-4 backdrop-blur",
+                    "relative overflow-hidden panel p-4",
                     entry.featured && "border-primary/60",
                   )}
                   style={{ boxShadow: entry.featured ? `0 0 40px -22px ${meta.glow}` : undefined }}
@@ -187,7 +187,7 @@ function ShopPage() {
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05, duration: 0.35 }}
-                className="rounded-xl border border-border/70 bg-card/60 p-4 text-center backdrop-blur"
+                className="panel p-4 text-center"
                 style={{ boxShadow: `0 0 40px -26px ${meta.glow}` }}
               >
                 <Package className={cn("mx-auto size-8", meta.color)} />
@@ -238,7 +238,7 @@ function ShopPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(index, 14) * 0.03, duration: 0.32 }}
-                className="rounded-xl border border-border/70 bg-card/60 p-4 backdrop-blur transition-transform hover:-translate-y-0.5"
+                className="panel p-4 transition-transform hover:-translate-y-0.5"
               >
                 <div className="flex items-center justify-between gap-2">
                   <RarityChip rarity={item.rarity} />

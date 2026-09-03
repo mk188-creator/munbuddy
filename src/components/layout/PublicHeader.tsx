@@ -28,8 +28,8 @@ export function PublicHeader() {
       className={cn(
         "sticky top-0 z-30 border-b transition-all duration-300",
         scrolled
-          ? "border-border/70 bg-background/70 shadow-[0_10px_40px_-30px_oklch(0_0_0/0.9)] backdrop-blur-xl"
-          : "border-transparent bg-background/40 backdrop-blur",
+          ? "border-foreground bg-background/95 shadow-[0_3px_0_0_var(--color-foreground)] backdrop-blur"
+          : "border-transparent bg-background/70 backdrop-blur",
       )}
     >
       <div
@@ -42,11 +42,11 @@ export function PublicHeader() {
           <motion.img
             src={logo}
             alt="MUN Hub logo"
-            className="size-8 rounded-xl"
+            className="size-8 border-2 border-foreground bg-background"
             whileHover={{ rotate: 8, scale: 1.08 }}
             transition={{ type: "spring", stiffness: 320, damping: 14 }}
           />
-          <span className="font-display text-base font-semibold">MUN Hub</span>
+          <span className="font-display text-base font-extrabold tracking-tight">MUN Hub</span>
         </Link>
         <nav className="flex items-center gap-1.5">
           <Button asChild variant="ghost" size="sm">

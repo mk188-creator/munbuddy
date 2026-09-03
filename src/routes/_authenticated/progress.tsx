@@ -46,7 +46,7 @@ function Stat({
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="rounded-xl border border-border/70 bg-card/60 p-4 backdrop-blur"
+      className="panel p-4"
     >
       <div className="flex items-center gap-2 text-muted-foreground">
         <Icon className="size-4" />
@@ -134,7 +134,7 @@ function ProgressPage() {
         </Button>
       </header>
 
-      <div className="mt-6 rounded-2xl border border-border/70 bg-card/60 p-5 backdrop-blur">
+      <div className="mt-6 panel p-5">
         <XPBar level={level} xp={xp} lifetimeXp={Number(stats?.lifetime_xp ?? 0)} />
       </div>
 
@@ -173,7 +173,7 @@ function ProgressPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.04, duration: 0.35 }}
                         className={cn(
-                          "rounded-xl border border-border/70 bg-card/60 p-4 backdrop-blur transition-colors",
+                          "panel p-4 transition-colors",
                           done && !claimed && "border-primary/50",
                         )}
                       >
@@ -228,7 +228,7 @@ function ProgressPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: Math.min(index, 12) * 0.03, duration: 0.35 }}
                   className={cn(
-                    "rounded-xl border border-border/70 bg-card/60 p-4 backdrop-blur",
+                    "panel p-4",
                     done ? "border-primary/50" : "opacity-90",
                   )}
                 >
