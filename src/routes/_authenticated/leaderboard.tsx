@@ -63,7 +63,7 @@ function LeaderboardPage() {
         </TabsList>
       </Tabs>
 
-      <div className="mt-4 overflow-hidden rounded-2xl border border-border/70 bg-card/60 backdrop-blur">
+      <div className="mt-4 overflow-hidden panel">
         {board.isLoading ? (
           <div className="space-y-2 p-4">
             {Array.from({ length: 8 }, (_, i) => (

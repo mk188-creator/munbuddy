@@ -151,7 +151,7 @@ function CommunityPage() {
         </div>
       ) : null}
 
-      <div className="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-border/70 bg-card/50 p-3 backdrop-blur">
+      <div className="min-h-0 flex-1 overflow-y-auto panel p-3">
         {feed.isLoading ? (
           <div className="space-y-3">
             {Array.from({ length: 6 }, (_, i) => (

@@ -104,7 +104,7 @@ function InventoryPage() {
         </p>
       </header>
 
-      <section className="mt-6 rounded-2xl border border-border/70 bg-card/60 p-5 backdrop-blur">
+      <section className="mt-6 panel p-5">
         <h2 className="font-display text-sm font-semibold uppercase tracking-wide text-muted-foreground">
           Showcased rank
         </h2>
@@ -167,7 +167,7 @@ function InventoryPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: Math.min(index, 14) * 0.03, duration: 0.35 }}
               className={cn(
-                "rounded-xl border border-border/70 bg-card/60 p-4 backdrop-blur transition-transform hover:-translate-y-0.5",
+                "panel p-4 transition-transform hover:-translate-y-0.5",
                 isEquipped && "border-primary/60",
               )}
             >

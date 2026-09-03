@@ -104,7 +104,7 @@ function Dashboard() {
                 key={thread.id}
                 to="/chat/$threadId"
                 params={{ threadId: thread.id }}
-                className="flex items-center justify-between rounded-lg border border-border/70 bg-background/40 px-4 py-3 transition-colors hover:border-primary/40"
+                className="flex items-center justify-between panel px-4 py-3 transition-colors hover:border-primary/40"
               >
                 <span className="min-w-0">
                   <span className="block truncate text-sm">{thread.title}</span>
@@ -127,7 +127,7 @@ function Dashboard() {
                 key={tool.id}
                 to="/tools/$toolId"
                 params={{ toolId: tool.id }}
-                className="rounded-lg border border-border/70 bg-background/40 px-4 py-3 transition-colors hover:border-primary/40"
+                className="panel px-4 py-3 transition-colors hover:border-primary/40"
               >
                 <span className="block text-sm">{tool.name}</span>
                 <span className="line-clamp-1 text-xs text-muted-foreground">{tool.tagline}</span>
