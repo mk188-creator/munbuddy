@@ -4,7 +4,6 @@ import { toast } from "sonner";
 
 import logo from "@/assets/mun-hub-logo.png";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -89,13 +88,6 @@ function AuthPage() {
     setSent(true);
   };
 
-
-  const google = async () => {
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
-    });
-    if (result.error) toast.error("Google sign-in failed. Please try again.");
-  };
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-12">
@@ -192,15 +184,6 @@ function AuthPage() {
                 </form>
               </TabsContent>
 
-              <div className="my-6 flex items-center gap-3">
-                <span className="h-px flex-1 bg-border" />
-                <span className="text-xs text-muted-foreground">or</span>
-                <span className="h-px flex-1 bg-border" />
-              </div>
-
-              <Button variant="surface" className="w-full" onClick={() => void google()}>
-                Continue with Google
-              </Button>
             </Tabs>
           )}
         </div>
