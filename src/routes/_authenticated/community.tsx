@@ -333,15 +333,25 @@ function CommunityPage() {
             </Button>
           </div>
         )}
-        <div className="flex items-center gap-2">
+        <div className="ink-card flex items-end gap-2 p-2">
+          <span className="kicker hidden shrink-0 select-none pb-2.5 pl-1 sm:block">Floor</span>
           <Input
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
-            placeholder={data?.muted ? "You are muted." : "Message the global community…"}
+            placeholder={data?.muted ? "You are muted." : "Address the floor…"}
             disabled={data?.muted}
             maxLength={1200}
+            className="border-0 bg-transparent shadow-none focus-visible:ring-0"
           />
-          <Button type="submit" size="icon" aria-label="Send" disabled={data?.muted || send.isPending}>
+          <span className="hidden pb-2.5 font-mono text-[10px] text-muted-foreground sm:block">
+            {draft.length}/1200
+          </span>
+          <Button
+            type="submit"
+            size="icon"
+            aria-label="Send"
+            disabled={data?.muted || send.isPending}
+          >
             <Send className="size-4" />
           </Button>
         </div>
