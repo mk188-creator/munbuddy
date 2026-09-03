@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowUpRight, FileText, MessagesSquare, Sparkle, Wrench } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SectionMark, SketchRule, Annotation, Stamp } from "@/components/motion/Doodles";
 import { getUsageStats, getProfile } from "@/lib/profile.functions";
 import { listThreads, createThread } from "@/lib/chat.functions";
 import { MUN_TOOLS, getTool } from "@/lib/mun-tools";
@@ -12,10 +13,15 @@ import { MUN_TOOLS, getTool } from "@/lib/mun-tools";
 export const Route = createFileRoute("/_authenticated/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — MUN Hub" },
-      { name: "description", content: "Your MUN preparation at a glance: recent chats, tool usage and documents." },
-      { property: "og:title", content: "Dashboard — MUN Hub" },
+      { title: "Command Desk — MUN Hub" },
+      {
+        name: "description",
+        content: "Your Model UN command desk: recent briefs, tool usage, documents and progress.",
+      },
+      { property: "og:title", content: "Command Desk — MUN Hub" },
       { property: "og:description", content: "Your Model UN preparation workspace." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Dashboard,
@@ -43,100 +49,137 @@ function Dashboard() {
 
   const firstName = profile.data?.full_name?.split(" ")[0];
 
-  const cards = [
-    { label: "AI runs", value: stats.data?.totalRuns ?? 0, icon: Sparkle },
-    { label: "This week", value: stats.data?.runsThisWeek ?? 0, icon: Wrench },
-    { label: "Conversations", value: stats.data?.threadCount ?? 0, icon: MessagesSquare },
-    { label: "Documents", value: stats.data?.documentCount ?? 0, icon: FileText },
+  const ledger = [
+    { label: "AI runs", value: stats.data?.totalRuns ?? 0, note: "all sessions" },
+    { label: "This week", value: stats.data?.runsThisWeek ?? 0, note: "last 7 days" },
+    { label: "Briefs", value: stats.data?.threadCount ?? 0, note: "conversations" },
+    { label: "Documents", value: stats.data?.documentCount ?? 0, note: "in the file" },
   ];
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-8">
-      <header className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl font-semibold sm:text-3xl">
-            {firstName ? `Welcome back, ${firstName}` : "Welcome back"}
-          </h1>
-          <p className="mt-1.5 text-sm text-muted-foreground">
-            Pick up where you left off, or start a fresh brief.
-          </p>
+    <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
+      {/* Masthead */}
+      <header className="relative border-b-2 border-foreground pb-5">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="min-w-0">
+            <span className="kicker">The MUN Hub · Command desk</span>
+            <h1 className="headline mt-2 text-4xl sm:text-5xl">
+              {firstName ? `Good to see you, ${firstName}.` : "Good to see you."}
+            </h1>
+            <Annotation className="mt-3 max-w-md">
+              Pick up an open brief, or open the floor with a fresh one.
+            </Annotation>
+          </div>
+          <div className="flex items-center gap-3">
+            <Stamp className="hidden sm:block">In session</Stamp>
+            <Button variant="hero" onClick={() => start.mutate()} disabled={start.isPending}>
+              {start.isPending ? "Opening…" : "New brief"}
+            </Button>
+          </div>
         </div>
-        <Button variant="hero" onClick={() => start.mutate()} disabled={start.isPending}>
-          {start.isPending ? "Opening…" : "New chat"}
-        </Button>
       </header>
 
-      <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {cards.map((card) => (
-          <div key={card.label} className="panel p-5">
-            <div className="flex items-center justify-between">
-              <span className="text-xs uppercase tracking-wide text-muted-foreground">
-                {card.label}
-              </span>
-              <card.icon className="size-4 text-primary" />
-            </div>
+      {/* Ledger strip — typographic, not four identical cards */}
+      <section className="grid grid-cols-2 divide-foreground/25 border-b border-foreground/25 sm:grid-cols-4 sm:divide-x">
+        {ledger.map((item) => (
+          <div key={item.label} className="px-1 py-5 sm:px-5">
+            <p className="kicker">{item.label}</p>
             {stats.isLoading ? (
-              <Skeleton className="mt-3 h-8 w-16" />
+              <Skeleton className="mt-2 h-9 w-16" />
             ) : (
-              <p className="mt-2 font-display text-3xl font-semibold">{card.value}</p>
+              <p className="font-display text-4xl font-extrabold tabular-nums">{item.value}</p>
             )}
+            <p className="hand text-sm text-muted-foreground">{item.note}</p>
           </div>
         ))}
       </section>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <section className="panel p-6">
-          <div className="flex items-center justify-between">
-            <h2 className="font-display text-base font-semibold">Recent conversations</h2>
-            <Link to="/chat" className="text-xs text-primary hover:underline">
+      <div className="mt-10 grid gap-10 lg:grid-cols-[1.25fr_1fr]">
+        {/* Dispatches */}
+        <section>
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 className="flex items-center gap-3 font-display text-xl font-extrabold">
+              <SectionMark>01</SectionMark> Recent dispatches
+            </h2>
+            <Link to="/chat" className="pen-link font-mono text-[11px] uppercase tracking-widest">
               View all
             </Link>
           </div>
-          <div className="mt-4 space-y-2">
-            {threads.isLoading && <Skeleton className="h-14 w-full" />}
+          <SketchRule className="mt-3" />
+
+          <ol className="mt-4">
+            {threads.isLoading && <Skeleton className="h-16 w-full" />}
             {threads.data?.length === 0 && (
-              <p className="text-sm text-muted-foreground">
-                No conversations yet. Start one to see it here.
+              <p className="hand py-6 text-base text-muted-foreground">
+                Nothing filed yet — your first brief will appear here.
               </p>
             )}
-            {threads.data?.slice(0, 6).map((thread) => (
-              <Link
-                key={thread.id}
-                to="/chat/$threadId"
-                params={{ threadId: thread.id }}
-                className="flex items-center justify-between panel px-4 py-3 transition-colors hover:border-primary/40"
-              >
-                <span className="min-w-0">
-                  <span className="block truncate text-sm">{thread.title}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {getTool(thread.tool)?.name ?? "Chat"} ·{" "}
-                    {new Date(thread.updated_at).toLocaleDateString()}
+            {threads.data?.slice(0, 6).map((thread, index) => (
+              <li key={thread.id}>
+                <Link
+                  to="/chat/$threadId"
+                  params={{ threadId: thread.id }}
+                  className="group flex items-center gap-4 border-b border-dashed border-foreground/25 py-3.5 transition-colors hover:bg-accent/60"
+                >
+                  <span className="font-mono text-xs text-muted-foreground">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                </span>
-                <ArrowUpRight className="size-4 shrink-0 text-muted-foreground" />
-              </Link>
+                  <span className="min-w-0 flex-1">
+                    <span className="block truncate text-[15px] font-semibold">{thread.title}</span>
+                    <span className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                      {getTool(thread.tool)?.name ?? "Chat"} ·{" "}
+                      {new Date(thread.updated_at).toLocaleDateString()}
+                    </span>
+                  </span>
+                  <ArrowUpRight className="size-4 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </Link>
+              </li>
             ))}
-          </div>
+          </ol>
         </section>
 
-        <section className="panel p-6">
-          <h2 className="font-display text-base font-semibold">Jump into a tool</h2>
-          <div className="mt-4 grid gap-2">
+        {/* Instruments */}
+        <section className="relative">
+          <h2 className="flex items-center gap-3 font-display text-xl font-extrabold">
+            <SectionMark>02</SectionMark> Instruments
+          </h2>
+          <SketchRule className="mt-3" />
+
+          <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
             {MUN_TOOLS.slice(0, 6).map((tool) => (
               <Link
                 key={tool.id}
                 to="/tools/$toolId"
                 params={{ toolId: tool.id }}
-                className="panel px-4 py-3 transition-colors hover:border-primary/40"
+                className="ink-card hover-lift block px-4 py-3"
               >
-                <span className="block text-sm">{tool.name}</span>
+                <span className="block text-sm font-semibold">{tool.name}</span>
                 <span className="line-clamp-1 text-xs text-muted-foreground">{tool.tagline}</span>
               </Link>
             ))}
           </div>
+
           <Button asChild variant="surface" className="mt-4 w-full">
-            <Link to="/tools">All {MUN_TOOLS.length} tools</Link>
+            <Link to="/tools">All {MUN_TOOLS.length} instruments</Link>
           </Button>
+
+          <div className="mt-8 dashed-rule p-4">
+            <p className="kicker">Standing orders</p>
+            <p className="hand mt-1 text-base">
+              Draft early, cite hard, and never let the chair catch you unprepared.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Button asChild variant="ghost" size="sm">
+                <Link to="/progress">Progress</Link>
+              </Button>
+              <Button asChild variant="ghost" size="sm">
+                <Link to="/community">Community</Link>
+              </Button>
+              <Button asChild variant="ghost" size="sm">
+                <Link to="/hub">Conferences</Link>
+              </Button>
+            </div>
+          </div>
         </section>
       </div>
     </div>
