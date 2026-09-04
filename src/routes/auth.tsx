@@ -38,12 +38,21 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [mode, setMode] = useState<"auth" | "forgot">("auth");
+  const [resetSent, setResetSent] = useState(false);
 
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY") {
+        window.location.href = "/reset-password";
+        return;
+      }
       if (session) window.location.href = "/dashboard";
     });
     return () => data.subscription.unsubscribe();
@@ -51,16 +60,21 @@ function AuthPage() {
 
   const friendly = (message: string) => {
     if (/invalid login credentials/i.test(message))
-      return "Wrong email or password. If you just signed up, try creating the account again.";
+      return "Wrong email or password. If you just signed up, confirm your email first.";
     if (/known to be weak|pwned/i.test(message))
       return "That password appears in known data breaches. Please choose a stronger one.";
-    if (/already registered/i.test(message))
+    if (/already registered|user already/i.test(message))
       return "That email already has an account — try signing in instead.";
+    if (/rate limit|too many/i.test(message))
+      return "Too many attempts. Please wait a minute and try again.";
+    if (/fetch|network/i.test(message))
+      return "Network problem — check your connection and try again.";
     return message;
   };
 
   const signIn = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (loading) return;
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
@@ -69,13 +83,27 @@ function AuthPage() {
 
   const signUp = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (loading) return;
+    const handle = username.trim().toLowerCase();
+    if (!/^[a-z0-9_]{3,24}$/.test(handle)) {
+      toast.error("Username must be 3–24 characters: letters, numbers or underscores.");
+      return;
+    }
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
     setLoading(true);
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: window.location.origin,
-        data: { full_name: fullName },
+        data: { full_name: fullName, username: handle },
       },
     });
     setLoading(false);
@@ -89,6 +117,38 @@ function AuthPage() {
     }
     setSent(true);
   };
+
+  const signInWithGoogle = async () => {
+    if (googleLoading) return;
+    setGoogleLoading(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    if (result && "error" in result && result.error) {
+      setGoogleLoading(false);
+      toast.error(friendly(result.error.message));
+    }
+  };
+
+  const sendReset = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (loading) return;
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      toast.error("Enter a valid email address.");
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setLoading(false);
+    if (error) {
+      toast.error(friendly(error.message));
+      return;
+    }
+    setResetSent(true);
+  };
+
 
 
   return (
