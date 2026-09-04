@@ -171,6 +171,58 @@ function AuthPage() {
                 We sent a confirmation link to {email}. Confirm it to activate your account.
               </p>
             </div>
+          ) : mode === "forgot" ? (
+            <div className="space-y-4">
+              {resetSent ? (
+                <div className="space-y-3 text-center">
+                  <h1 className="font-display text-xl font-semibold">Check your inbox</h1>
+                  <p className="text-sm text-muted-foreground">
+                    If an account exists for {email}, we sent a password recovery link.
+                  </p>
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => {
+                      setResetSent(false);
+                      setMode("auth");
+                    }}
+                  >
+                    Back to sign in
+                  </Button>
+                </div>
+              ) : (
+                <form onSubmit={sendReset} className="space-y-4">
+                  <div className="space-y-1">
+                    <h1 className="font-display text-xl font-semibold">Reset your password</h1>
+                    <p className="text-sm text-muted-foreground">
+                      Enter your email and we'll send a recovery link.
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email-reset">Email</Label>
+                    <Input
+                      id="email-reset"
+                      type="email"
+                      required
+                      autoComplete="email"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                      placeholder="delegate@school.edu"
+                    />
+                  </div>
+                  <Button type="submit" variant="hero" className="w-full" disabled={loading}>
+                    {loading ? "Sending…" : "Send recovery link"}
+                  </Button>
+                  <button
+                    type="button"
+                    className="w-full text-sm text-muted-foreground underline underline-offset-4"
+                    onClick={() => setMode("auth")}
+                  >
+                    Back to sign in
+                  </button>
+                </form>
+              )}
+            </div>
           ) : (
             <Tabs defaultValue="signin">
               <TabsList className="grid w-full grid-cols-2">
@@ -186,6 +238,7 @@ function AuthPage() {
                       id="email"
                       type="email"
                       required
+                      autoComplete="email"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
                       placeholder="delegate@school.edu"
@@ -197,6 +250,7 @@ function AuthPage() {
                       id="password"
                       type="password"
                       required
+                      autoComplete="current-password"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
                     />
@@ -204,6 +258,13 @@ function AuthPage() {
                   <Button type="submit" variant="hero" className="w-full" disabled={loading}>
                     {loading ? "Signing in…" : "Sign in"}
                   </Button>
+                  <button
+                    type="button"
+                    className="w-full text-sm text-muted-foreground underline underline-offset-4"
+                    onClick={() => setMode("forgot")}
+                  >
+                    Forgot password?
+                  </button>
                 </form>
               </TabsContent>
 
@@ -220,11 +281,24 @@ function AuthPage() {
                     />
                   </div>
                   <div className="space-y-2">
+                    <Label htmlFor="username">Username</Label>
+                    <Input
+                      id="username"
+                      required
+                      minLength={3}
+                      maxLength={24}
+                      value={username}
+                      onChange={(event) => setUsername(event.target.value)}
+                      placeholder="ada_delegate"
+                    />
+                  </div>
+                  <div className="space-y-2">
                     <Label htmlFor="email-up">Email</Label>
                     <Input
                       id="email-up"
                       type="email"
                       required
+                      autoComplete="email"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
                     />
@@ -236,8 +310,21 @@ function AuthPage() {
                       type="password"
                       required
                       minLength={8}
+                      autoComplete="new-password"
                       value={password}
                       onChange={(event) => setPassword(event.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="password-confirm">Confirm password</Label>
+                    <Input
+                      id="password-confirm"
+                      type="password"
+                      required
+                      minLength={8}
+                      autoComplete="new-password"
+                      value={confirmPassword}
+                      onChange={(event) => setConfirmPassword(event.target.value)}
                     />
                   </div>
                   <Button type="submit" variant="hero" className="w-full" disabled={loading}>
@@ -246,8 +333,25 @@ function AuthPage() {
                 </form>
               </TabsContent>
 
+              <div className="mt-6 space-y-4">
+                <div className="flex items-center gap-3">
+                  <span className="h-px flex-1 bg-border" />
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground">or</span>
+                  <span className="h-px flex-1 bg-border" />
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  disabled={googleLoading}
+                  onClick={signInWithGoogle}
+                >
+                  {googleLoading ? "Opening Google…" : "Continue with Google"}
+                </Button>
+              </div>
             </Tabs>
           )}
+
         </div>
       </div>
     </div>
