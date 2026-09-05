@@ -1,4 +1,4 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -27,10 +27,11 @@ export const Route = createFileRoute("/auth")({
       },
     ],
   }),
+  ssr: false,
   beforeLoad: async () => {
     if (typeof window === "undefined") return;
     const { data } = await supabase.auth.getSession();
-    if (data.session) throw redirect({ to: "/dashboard" });
+    if (data.session) throw redirect({ to: "/dashboard", replace: true });
   },
   component: AuthPage,
 });
@@ -47,16 +48,22 @@ function AuthPage() {
   const [mode, setMode] = useState<"auth" | "forgot">("auth");
   const [resetSent, setResetSent] = useState(false);
 
+  const navigate = useNavigate();
+
+  // Single navigation source of truth for this page: the Supabase auth event.
+  // No form handler navigates directly, so a sign-in never fires twice.
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "PASSWORD_RECOVERY") {
-        window.location.href = "/reset-password";
+        void navigate({ to: "/reset-password", replace: true });
         return;
       }
-      if (session) window.location.href = "/dashboard";
+      if (event === "SIGNED_IN" && session) {
+        void navigate({ to: "/dashboard", replace: true });
+      }
     });
     return () => data.subscription.unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const friendly = (message: string) => {
     if (/invalid login credentials/i.test(message))
@@ -111,11 +118,9 @@ function AuthPage() {
       toast.error(friendly(error.message));
       return;
     }
-    if (data.session) {
-      window.location.href = "/dashboard";
-      return;
-    }
-    setSent(true);
+    // The SIGNED_IN listener above performs the navigation when a session
+    // exists, so nothing is pushed here (that double-navigation caused flashes).
+    if (!data.session) setSent(true);
   };
 
   const signInWithGoogle = async () => {

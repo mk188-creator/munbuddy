@@ -42,6 +42,11 @@ export function RippleLayer() {
 
 /* ------------------------------------------------------- Page transitions -- */
 
+/**
+ * Fade-in only. An exit animation with `mode="wait"` kept the OLD page on
+ * screen after the URL changed, which read as "the page went back, then
+ * forward again". The new page now mounts immediately and just fades in.
+ */
 export function PageTransition({ children }: { children: ReactNode }) {
   const reduce = useReducedMotion();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -49,17 +54,14 @@ export function PageTransition({ children }: { children: ReactNode }) {
   if (reduce) return <>{children}</>;
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.div
-        key={pathname}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
-        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <motion.div
+      key={pathname}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.18, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
   );
 }
 
@@ -69,7 +71,16 @@ export function LoadingScreen() {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 750);
+    // Only on the very first visit of a browser session — never again, so it
+    // can't veil an in-app navigation.
+    if (sessionStorage.getItem("munhub:booted")) {
+      setDone(true);
+      return;
+    }
+    const t = setTimeout(() => {
+      sessionStorage.setItem("munhub:booted", "1");
+      setDone(true);
+    }, 600);
     return () => clearTimeout(t);
   }, []);
 

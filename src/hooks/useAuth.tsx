@@ -53,10 +53,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await queryClient.cancelQueries();
         queryClient.clear();
         await supabase.auth.signOut();
-        window.location.href = "/auth";
+        await router.navigate({ to: "/auth", replace: true });
       },
     }),
-    [session, loading, queryClient],
+    [session, loading, queryClient, router],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
