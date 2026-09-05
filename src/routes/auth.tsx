@@ -118,11 +118,9 @@ function AuthPage() {
       toast.error(friendly(error.message));
       return;
     }
-    if (data.session) {
-      window.location.href = "/dashboard";
-      return;
-    }
-    setSent(true);
+    // The SIGNED_IN listener above performs the navigation when a session
+    // exists, so nothing is pushed here (that double-navigation caused flashes).
+    if (!data.session) setSent(true);
   };
 
   const signInWithGoogle = async () => {
