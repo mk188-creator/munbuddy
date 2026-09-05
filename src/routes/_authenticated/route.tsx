@@ -6,10 +6,13 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
+  // Uses the locally persisted session (no network round-trip on every
+  // navigation) so the gate resolves before the first paint — the old
+  // getUser() fetch is what made pages flash and bounce between routes.
   beforeLoad: async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error || !data.user) throw redirect({ to: "/auth" });
-    return { user: data.user };
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) throw redirect({ to: "/auth", replace: true });
+    return { user: data.session.user };
   },
   component: AuthenticatedLayout,
 });
