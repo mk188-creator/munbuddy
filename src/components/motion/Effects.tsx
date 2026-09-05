@@ -71,7 +71,16 @@ export function LoadingScreen() {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 750);
+    // Only on the very first visit of a browser session — never again, so it
+    // can't veil an in-app navigation.
+    if (sessionStorage.getItem("munhub:booted")) {
+      setDone(true);
+      return;
+    }
+    const t = setTimeout(() => {
+      sessionStorage.setItem("munhub:booted", "1");
+      setDone(true);
+    }, 600);
     return () => clearTimeout(t);
   }, []);
 
