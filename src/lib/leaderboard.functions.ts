@@ -138,6 +138,7 @@ export const getFriendState = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { userId: string }) => input)
   .handler(async ({ data, context }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const [{ data: mine }, { count: followers }] = await Promise.all([
       context.supabase
         .from("friends")
@@ -145,10 +146,11 @@ export const getFriendState = createServerFn({ method: "GET" })
         .eq("user_id", context.userId)
         .eq("friend_id", data.userId)
         .maybeSingle(),
-      context.supabase
+      supabaseAdmin
         .from("friends")
         .select("id", { count: "exact", head: true })
         .eq("friend_id", data.userId),
     ]);
+
     return { following: Boolean(mine), followers: followers ?? 0, isMe: data.userId === context.userId };
   });
