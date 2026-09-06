@@ -46,7 +46,9 @@ export const getLeaderboardRows = createServerFn({ method: "GET" })
       allowedIds = [me, ...(friends ?? []).map((f) => f.friend_id)];
     }
 
-    let statsQuery = context.supabase
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    let statsQuery = supabaseAdmin
       .from("user_stats")
       .select("user_id, level, lifetime_xp, coins, login_streak, conference_count")
       .order(scope === "conference" ? "conference_count" : "lifetime_xp", { ascending: false })
@@ -58,12 +60,13 @@ export const getLeaderboardRows = createServerFn({ method: "GET" })
     if (!ids.length) return { rows: [], scope };
 
     const [{ data: profiles }, { data: ranks }] = await Promise.all([
-      context.supabase
+      supabaseAdmin
         .from("profiles")
         .select("id, username, display_name, full_name, avatar_url, country, equipped_rank")
         .in("id", ids),
       context.supabase.from("ranks").select("*"),
     ]);
+
 
     const byId = new Map((profiles ?? []).map((p) => [p.id, p]));
     const rankById = new Map((ranks ?? []).map((r) => [r.id, r]));
