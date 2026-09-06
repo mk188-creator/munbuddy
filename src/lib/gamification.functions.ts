@@ -203,6 +203,7 @@ export const getLeaderboard = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { scope?: "global" | "country" } = {}) => input)
   .handler(async ({ data, context }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     let country: string | null = null;
     if (data.scope === "country") {
       const { data: me } = await context.supabase
@@ -213,7 +214,7 @@ export const getLeaderboard = createServerFn({ method: "GET" })
       country = me?.country ?? null;
     }
 
-    const { data: stats } = await context.supabase
+    const { data: stats } = await supabaseAdmin
       .from("user_stats")
       .select("user_id, level, lifetime_xp, coins, login_streak")
       .order("lifetime_xp", { ascending: false })
@@ -222,11 +223,12 @@ export const getLeaderboard = createServerFn({ method: "GET" })
     const ids = (stats ?? []).map((s) => s.user_id);
     if (!ids.length) return { rows: [] };
 
-    const { data: profiles } = await context.supabase
+    const { data: profiles } = await supabaseAdmin
       .from("profiles")
       .select("id, username, display_name, full_name, avatar_url, country, equipped_rank")
       .in("id", ids);
     const { data: ranks } = await context.supabase.from("ranks").select("*");
+
 
     const byId = new Map((profiles ?? []).map((p) => [p.id, p]));
     const rankById = new Map((ranks ?? []).map((r) => [r.id, r]));
@@ -257,26 +259,34 @@ export const getPublicProfile = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { username: string }) => input)
   .handler(async ({ data, context }) => {
-    const { data: profile } = await context.supabase
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const PUBLIC_PROFILE_COLUMNS =
+      "id, username, display_name, full_name, school, country, bio, mun_experience, avatar_url, public_profile, showcase, last_seen_at, created_at, equipped_frame, equipped_background, equipped_title, equipped_chat_effect, equipped_rank";
+
+    const { data: profile } = await supabaseAdmin
       .from("profiles")
-      .select("*")
+      .select(PUBLIC_PROFILE_COLUMNS)
       .ilike("username", data.username)
       .maybeSingle();
     if (!profile) throw new Error("Profile not found.");
+    if (!profile.public_profile && profile.id !== context.userId) {
+      throw new Error("This delegate keeps their profile private.");
+    }
 
     const [stats, roles, achievements, inventory, ranks, myRanks, conferences] = await Promise.all([
-      context.supabase.from("user_stats").select("*").eq("user_id", profile.id).maybeSingle(),
-      context.supabase.from("user_roles").select("role").eq("user_id", profile.id),
-      context.supabase
+      supabaseAdmin.from("user_stats").select("*").eq("user_id", profile.id).maybeSingle(),
+      supabaseAdmin.from("user_roles").select("role").eq("user_id", profile.id),
+      supabaseAdmin
         .from("user_achievements")
         .select("unlocked_at, achievements!inner(*)")
         .eq("user_id", profile.id)
         .not("unlocked_at", "is", null),
-      context.supabase.from("user_cosmetics").select("cosmetics!inner(*)").eq("user_id", profile.id),
+      supabaseAdmin.from("user_cosmetics").select("cosmetics!inner(*)").eq("user_id", profile.id),
       context.supabase.from("ranks").select("*"),
-      context.supabase.from("user_ranks").select("rank_id").eq("user_id", profile.id),
-      context.supabase.from("conferences").select("id", { count: "exact", head: true }).eq("user_id", profile.id),
+      supabaseAdmin.from("user_ranks").select("rank_id").eq("user_id", profile.id),
+      supabaseAdmin.from("conferences").select("id", { count: "exact", head: true }).eq("user_id", profile.id),
     ]);
+
 
     const rankList = ranks.data ?? [];
     const ownedRankIds = new Set((myRanks.data ?? []).map((r) => r.rank_id));

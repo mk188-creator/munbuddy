@@ -39,12 +39,14 @@ export const getCommunityFeed = createServerFn({ method: "GET" })
     const ids = list.map((m) => m.id);
     const authorIds = [...new Set(list.map((m) => m.user_id))];
 
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
     const [{ data: reactions }, { data: profiles }, { data: ranks }] = await Promise.all([
       ids.length
         ? context.supabase.from("message_reactions").select("message_id, emoji, user_id").in("message_id", ids)
         : Promise.resolve({ data: [] as { message_id: string; emoji: string; user_id: string }[] }),
       authorIds.length
-        ? context.supabase
+        ? supabaseAdmin
             .from("profiles")
             .select("id, username, display_name, full_name, avatar_url, equipped_rank, equipped_frame, equipped_chat_effect")
             .in("id", authorIds)
@@ -53,8 +55,9 @@ export const getCommunityFeed = createServerFn({ method: "GET" })
     ]);
 
     const statsRes = authorIds.length
-      ? await context.supabase.from("user_stats").select("user_id, level").in("user_id", authorIds)
+      ? await supabaseAdmin.from("user_stats").select("user_id, level").in("user_id", authorIds)
       : { data: [] as { user_id: string; level: number }[] };
+
 
     const myRoles = (roles ?? []).map((r) => r.role as string);
     return {
