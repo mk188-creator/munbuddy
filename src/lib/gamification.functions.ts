@@ -203,6 +203,7 @@ export const getLeaderboard = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { scope?: "global" | "country" } = {}) => input)
   .handler(async ({ data, context }) => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     let country: string | null = null;
     if (data.scope === "country") {
       const { data: me } = await context.supabase
@@ -213,7 +214,7 @@ export const getLeaderboard = createServerFn({ method: "GET" })
       country = me?.country ?? null;
     }
 
-    const { data: stats } = await context.supabase
+    const { data: stats } = await supabaseAdmin
       .from("user_stats")
       .select("user_id, level, lifetime_xp, coins, login_streak")
       .order("lifetime_xp", { ascending: false })
@@ -222,11 +223,12 @@ export const getLeaderboard = createServerFn({ method: "GET" })
     const ids = (stats ?? []).map((s) => s.user_id);
     if (!ids.length) return { rows: [] };
 
-    const { data: profiles } = await context.supabase
+    const { data: profiles } = await supabaseAdmin
       .from("profiles")
       .select("id, username, display_name, full_name, avatar_url, country, equipped_rank")
       .in("id", ids);
     const { data: ranks } = await context.supabase.from("ranks").select("*");
+
 
     const byId = new Map((profiles ?? []).map((p) => [p.id, p]));
     const rankById = new Map((ranks ?? []).map((r) => [r.id, r]));
