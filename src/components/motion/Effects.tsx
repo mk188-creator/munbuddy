@@ -43,26 +43,15 @@ export function RippleLayer() {
 /* ------------------------------------------------------- Page transitions -- */
 
 /**
- * Fade-in only. An exit animation with `mode="wait"` kept the OLD page on
- * screen after the URL changed, which read as "the page went back, then
- * forward again". The new page now mounts immediately and just fades in.
+ * Stable wrapper — deliberately NOT keyed by pathname.
+ *
+ * Keying it remounted the entire route tree (sidebar, providers, queries)
+ * on every navigation, which is what made pages blink back to the old view
+ * and then jump forward. Page-level fades are done with CSS on the content
+ * itself instead, so nothing unmounts.
  */
 export function PageTransition({ children }: { children: ReactNode }) {
-  const reduce = useReducedMotion();
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
-
-  if (reduce) return <>{children}</>;
-
-  return (
-    <motion.div
-      key={pathname}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.18, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className="contents">{children}</div>;
 }
 
 /* ---------------------------------------------------------- Loading veil -- */
