@@ -1,4 +1,5 @@
 import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
+import { loadSession, peekSession } from "@/lib/session-cache";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
