@@ -9,7 +9,12 @@ export const getRouter = () => {
     routeTree,
     context: { queryClient },
     scrollRestoration: true,
-    defaultPreloadStaleTime: 0,
+    defaultPreload: "intent",
+    defaultPreloadStaleTime: 10_000,
+    // Don't show a pending veil for quick transitions — that veil is what read
+    // as the page "flashing back" before the new one arrived.
+    defaultPendingMs: 800,
+    defaultPendingMinMs: 300,
   });
 
   return router;

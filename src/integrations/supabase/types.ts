@@ -446,6 +446,92 @@ export type Database = {
         }
         Relationships: []
       }
+      dm_blocks: {
+        Row: {
+          blocked_id: string
+          created_at: string
+          id: string
+          muted: boolean
+          user_id: string
+        }
+        Insert: {
+          blocked_id: string
+          created_at?: string
+          id?: string
+          muted?: boolean
+          user_id: string
+        }
+        Update: {
+          blocked_id?: string
+          created_at?: string
+          id?: string
+          muted?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      dm_messages: {
+        Row: {
+          body: string
+          created_at: string
+          deleted: boolean
+          id: string
+          read_at: string | null
+          sender_id: string
+          thread_id: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          deleted?: boolean
+          id?: string
+          read_at?: string | null
+          sender_id: string
+          thread_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          deleted?: boolean
+          id?: string
+          read_at?: string | null
+          sender_id?: string
+          thread_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dm_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "dm_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      dm_threads: {
+        Row: {
+          created_at: string
+          id: string
+          last_message_at: string
+          user_a: string
+          user_b: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_message_at?: string
+          user_a: string
+          user_b: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_message_at?: string
+          user_a?: string
+          user_b?: string
+        }
+        Relationships: []
+      }
       documents: {
         Row: {
           content: string
@@ -508,6 +594,54 @@ export type Database = {
         }
         Relationships: []
       }
+      follows: {
+        Row: {
+          created_at: string
+          follower_id: string
+          following_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          follower_id: string
+          following_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          follower_id?: string
+          following_id?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      friend_requests: {
+        Row: {
+          created_at: string
+          id: string
+          receiver_id: string
+          sender_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          receiver_id: string
+          sender_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          receiver_id?: string
+          sender_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       friends: {
         Row: {
           created_at: string
@@ -525,6 +659,48 @@ export type Database = {
           created_at?: string
           friend_id?: string
           id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      message_flags: {
+        Row: {
+          action: string
+          categories: Json
+          content: string
+          created_at: string
+          id: string
+          message_id: string | null
+          reviewed_by: string | null
+          severity: string
+          status: string
+          surface: string
+          user_id: string
+        }
+        Insert: {
+          action?: string
+          categories?: Json
+          content?: string
+          created_at?: string
+          id?: string
+          message_id?: string | null
+          reviewed_by?: string | null
+          severity?: string
+          status?: string
+          surface?: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          categories?: Json
+          content?: string
+          created_at?: string
+          id?: string
+          message_id?: string | null
+          reviewed_by?: string | null
+          severity?: string
+          status?: string
+          surface?: string
           user_id?: string
         }
         Relationships: []
@@ -603,6 +779,72 @@ export type Database = {
           metric?: string
           title?: string
           xp_reward?: number
+        }
+        Relationships: []
+      }
+      moderation_actions: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          id: string
+          message_id: string | null
+          reason: string
+          target_user_id: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          message_id?: string | null
+          reason?: string
+          target_user_id?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          id?: string
+          message_id?: string | null
+          reason?: string
+          target_user_id?: string | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          actor_id: string | null
+          body: string
+          created_at: string
+          entity_id: string | null
+          id: string
+          link: string
+          read_at: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          actor_id?: string | null
+          body?: string
+          created_at?: string
+          entity_id?: string | null
+          id?: string
+          link?: string
+          read_at?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          actor_id?: string | null
+          body?: string
+          created_at?: string
+          entity_id?: string | null
+          id?: string
+          link?: string
+          read_at?: string | null
+          type?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -716,6 +958,51 @@ export type Database = {
           label?: string
           min_level?: number
           priority?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          created_at: string
+          details: string
+          id: string
+          message_id: string | null
+          reason: string
+          reporter_id: string
+          resolution: string
+          reviewed_by: string | null
+          status: string
+          surface: string
+          target_user_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          details?: string
+          id?: string
+          message_id?: string | null
+          reason: string
+          reporter_id: string
+          resolution?: string
+          reviewed_by?: string | null
+          status?: string
+          surface?: string
+          target_user_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          details?: string
+          id?: string
+          message_id?: string | null
+          reason?: string
+          reporter_id?: string
+          resolution?: string
+          reviewed_by?: string | null
+          status?: string
+          surface?: string
+          target_user_id?: string | null
           updated_at?: string
         }
         Relationships: []

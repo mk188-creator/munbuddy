@@ -1,4 +1,5 @@
 import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
+import { loadSession, peekSession } from "@/lib/session-cache";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -30,8 +31,9 @@ export const Route = createFileRoute("/auth")({
   ssr: false,
   beforeLoad: async () => {
     if (typeof window === "undefined") return;
-    const { data } = await supabase.auth.getSession();
-    if (data.session) throw redirect({ to: "/dashboard", replace: true });
+    const peek = peekSession();
+    const session = peek.ready ? peek.session : await loadSession();
+    if (session) throw redirect({ to: "/dashboard", replace: true });
   },
   component: AuthPage,
 });
