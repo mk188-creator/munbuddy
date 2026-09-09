@@ -1,18 +1,19 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
-import { supabase } from "@/integrations/supabase/client";
+import { loadSession, peekSession } from "@/lib/session-cache";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
-  // Uses the locally persisted session (no network round-trip on every
-  // navigation) so the gate resolves before the first paint — the old
-  // getUser() fetch is what made pages flash and bounce between routes.
+  // Resolves synchronously after the first visit, so in-app navigation never
+  // suspends the gate — that suspension is what made the previous page linger
+  // and then bounce to the new one.
   beforeLoad: async () => {
-    const { data } = await supabase.auth.getSession();
-    if (!data.session) throw redirect({ to: "/auth", replace: true });
-    return { user: data.session.user };
+    const peek = peekSession();
+    const session = peek.ready ? peek.session : await loadSession();
+    if (!session) throw redirect({ to: "/auth", replace: true });
+    return { user: session.user };
   },
   component: AuthenticatedLayout,
 });
